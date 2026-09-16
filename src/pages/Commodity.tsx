@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { AlertCircle, CheckCircle2, AlertTriangle } from 'lucide-react'
+import { AlertCircle, CheckCircle2, AlertTriangle, PackageX, TrendingDown } from 'lucide-react'
 import { api, type CommodityRow } from '../lib/api'
 import { formatNumeral, formatDate } from '../lib/nepali'
 import { status } from '../lib/palette'
 import { useLang, type TranslationKey } from '../lib/i18n'
+import { KpiTile } from '../components/KpiTile'
 import { ErrorBanner } from '../components/ErrorBanner'
 import { Spinner } from '../components/Spinner'
 
@@ -46,7 +47,16 @@ export function Commodity() {
           {t('noReportsYet')}
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <KpiTile icon={PackageX} hue="red" label={t('kpiOutOfStock')}
+              value={n(rows.filter((r) => (r.vaccine_closing ?? 0) === 0).length)} />
+            <KpiTile icon={AlertTriangle} hue="amber" label={t('kpiHighWastage')}
+              value={n(rows.filter((r) => (r.wastage_pct ?? 0) > 20).length)} />
+            <KpiTile icon={TrendingDown} hue="blue" label={t('kpiAvgWastage')}
+              value={`${n((rows.reduce((sum, r) => sum + (r.wastage_pct ?? 0), 0) / rows.length).toFixed(1))}%`} />
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -95,7 +105,8 @@ export function Commodity() {
               </tbody>
             </table>
           </div>
-        </div>
+          </div>
+        </>
       )}
     </div>
   )

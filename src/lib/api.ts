@@ -12,6 +12,8 @@ export interface ScopeSummary {
   coverage_pct: number
   campaign_start: string
   campaign_end: string
+  aefi_minor: number
+  aefi_serious: number
 }
 
 export interface DailyRow {

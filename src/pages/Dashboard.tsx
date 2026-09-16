@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Target, Syringe, TrendingUp, CalendarDays, TrendingDown, Minus } from 'lucide-react'
+import { Target, Syringe, TrendingUp, CalendarDays, TrendingDown, Minus, AlertTriangle, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { api, type DashboardData, type PalikaRow } from '../lib/api'
 import { formatNumeral, campaignDayNumber, campaignDurationDays, campaignDaysRemaining } from '../lib/nepali'
 import { status } from '../lib/palette'
 import { useLang } from '../lib/i18n'
 import { KpiTile } from '../components/KpiTile'
 import { CoverageTrendChart } from '../components/charts/CoverageTrendChart'
+import { DailyDosesChart } from '../components/charts/DailyDosesChart'
 import { AgeSexChart } from '../components/charts/AgeSexChart'
 import { PalikaLeagueTable } from '../components/PalikaLeagueTable'
 import { WardTable } from '../components/WardTable'
@@ -60,6 +61,15 @@ export function Dashboard() {
       : { label: t('paceOnTrack'), color: status.warning, Icon: Minus }
 
   const dosesPerDay = dayN > 0 ? Math.round(summary.vaccinated / Math.max(dayN, 1)) : 0
+
+  // AEFI status: never color-alone, and always shown (a confirmed "none yet"
+  // in green is worth more here than silence - this is a safety signal, and
+  // it was previously visible only by opening one ward's page at a time).
+  const aefi = summary.aefi_serious > 0
+    ? { color: status.critical, Icon: AlertTriangle }
+    : summary.aefi_minor > 0
+      ? { color: status.warning, Icon: AlertCircle }
+      : { color: status.good, Icon: CheckCircle2 }
 
   return (
     <div className="p-4 md:p-6 space-y-5 max-w-6xl mx-auto">
@@ -127,10 +137,22 @@ export function Dashboard() {
         </span>
       </div>
 
+      <div
+        className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium"
+        style={{ backgroundColor: `${aefi.color}1a`, color: aefi.color }}
+      >
+        <aefi.Icon size={16} />
+        {summary.aefi_serious > 0 || summary.aefi_minor > 0
+          ? t('aefiSummary', { serious: n(summary.aefi_serious), minor: n(summary.aefi_minor) })
+          : t('aefiNone')}
+      </div>
+
       <div className="grid lg:grid-cols-2 gap-4">
         <CoverageTrendChart daily={daily} campaignStart={summary.campaign_start} campaignEnd={summary.campaign_end} />
-        <AgeSexChart ageSex={ageSex} />
+        <DailyDosesChart daily={daily} campaignStart={summary.campaign_start} campaignEnd={summary.campaign_end} />
       </div>
+
+      <AgeSexChart ageSex={ageSex} />
 
       {data.scope === 'district' && data.notReportingToday && (
         <NonReportingWards today={data.notReportingToday.today} wards={data.notReportingToday.wards} />

@@ -57,6 +57,9 @@ async function districtScope(bq) {
 
   const vaccinated = daily.length > 0 ? Number(daily[daily.length - 1].cumulative_doses) : 0;
   const jeTarget = Number(districtTarget.je_target);
+  const palikaRows = palikas.map(flattenRow);
+  const aefiMinor = palikaRows.reduce((sum, p) => sum + Number(p.aefi_minor), 0);
+  const aefiSerious = palikaRows.reduce((sum, p) => sum + Number(p.aefi_serious), 0);
 
   return {
     scope: "district",
@@ -70,10 +73,12 @@ async function districtScope(bq) {
       coverage_pct: jeTarget > 0 ? (vaccinated / jeTarget) * 100 : 0,
       campaign_start: CAMPAIGN_START,
       campaign_end: CAMPAIGN_END,
+      aefi_minor: aefiMinor,
+      aefi_serious: aefiSerious,
     },
     daily: daily.map(flattenRow),
     ageSex: ageSex.map(flattenRow),
-    palikas: palikas.map(flattenRow),
+    palikas: palikaRows,
     wards: null,
     duplicates: duplicates.map(flattenRow),
     notReportingToday: campaignActive ? { today, wards: notReportingToday.map(flattenRow) } : null,
@@ -161,6 +166,8 @@ async function narrowScope(bq, scope, code) {
       coverage_pct: summary.coverage_pct,
       campaign_start: CAMPAIGN_START,
       campaign_end: CAMPAIGN_END,
+      aefi_minor: summary.aefi_minor,
+      aefi_serious: summary.aefi_serious,
     },
     daily: dailyRows.map(flattenRow),
     ageSex,

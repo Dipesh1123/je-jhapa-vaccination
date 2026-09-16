@@ -49,6 +49,7 @@ const translations = {
 
   // Charts
   coverageTrendTitle: { en: 'Cumulative progress by day (%)', ne: 'दिनअनुसार सञ्चयी प्रगति (%)' },
+  dailyDosesTitle: { en: 'Doses given per day', ne: 'दिनअनुसार दिइएको मात्रा' },
   ageSexTitle: { en: 'Vaccinations by age and sex', ne: 'उमेर र लिङ्ग अनुसार खोप' },
   seriesActual: { en: 'Actual progress', ne: 'वास्तविक प्रगति' },
   seriesPace: { en: 'Required pace', ne: 'आवश्यक गति' },
@@ -56,6 +57,10 @@ const translations = {
   ageBand60plus: { en: '60+ yrs', ne: '६०+ वर्ष' },
   female: { en: 'Female', ne: 'महिला' },
   male: { en: 'Male', ne: 'पुरुष' },
+
+  // AEFI status bar
+  aefiSummary: { en: '{serious} serious, {minor} minor AEFI reported', ne: '{serious} गम्भीर, {minor} सामान्य AEFI प्रतिवेदित' },
+  aefiNone: { en: 'No AEFI reported', ne: 'कुनै AEFI प्रतिवेदित छैन' },
 
   // Non-reporting wards panel
   nonReportingTitle: { en: 'Not yet reported today', ne: 'आज अझै प्रतिवेदन नआएका' },
@@ -125,6 +130,9 @@ const translations = {
   commodityTitle: { en: 'Stock & Wastage', ne: 'सामग्री मौज्दात र खेर' },
   commoditySubtitle: { en: 'Ward-wise stock as of last report — {n} wards reported', ne: 'अन्तिम प्रतिवेदन अनुसार वडागत मौज्दात — {n} वडाले प्रतिवेदन गरेको' },
   noReportsYet: { en: 'No reports received yet', ne: 'अझै कुनै प्रतिवेदन प्राप्त भएको छैन' },
+  kpiOutOfStock: { en: 'Wards out of vaccine stock', ne: 'खोप मौज्दात सकिएका वडा' },
+  kpiHighWastage: { en: 'Wards with wastage over 20%', ne: '२०%भन्दा बढी खेर भएका वडा' },
+  kpiAvgWastage: { en: 'Average wastage rate', ne: 'औसत खेर दर' },
   colLocalLevelWard: { en: 'Local level / Ward', ne: 'स्थानीय तह / वडा' },
   colVaccineStock: { en: 'Vaccine stock', ne: 'खोप मौज्दात' },
   colDiluent: { en: 'Diluent', ne: 'डाइलुएन्ट' },
