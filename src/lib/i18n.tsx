@@ -57,6 +57,12 @@ const translations = {
   female: { en: 'Female', ne: 'महिला' },
   male: { en: 'Male', ne: 'पुरुष' },
 
+  // Dashboard filter
+  filterAll: { en: 'Overall (Jhapa district)', ne: 'समग्र (झापा जिल्ला)' },
+  filterMunicipalityLabel: { en: 'Municipality / Rural municipality', ne: 'नगरपालिका / गाउँपालिका' },
+  filterWardLabel: { en: 'Ward', ne: 'वडा' },
+  filterAllWards: { en: 'All wards', ne: 'सबै वडा' },
+
   // Palika league table
   progressByLocalLevel: { en: 'Progress by local level', ne: 'स्थानीय तह अनुसार प्रगति' },
   colLocalLevel: { en: 'Local level', ne: 'स्थानीय तह' },

@@ -3,7 +3,9 @@
 // flattenRow for why these are plain numbers/strings and not BigQuery's
 // {value}-wrapped NUMERIC/DATE types.
 
-export interface DistrictSummary {
+// Shape of the KPI summary at any dashboard scope - the whole district, one
+// local level, or one ward.
+export interface ScopeSummary {
   population: number
   je_target: number
   vaccinated: number
@@ -68,10 +70,15 @@ export interface WardRow {
 }
 
 export interface DashboardData {
-  district: DistrictSummary
+  scope: 'district' | 'local_level' | 'ward'
+  code: string | null
+  name: string | null
+  ward_no: number | null
+  summary: ScopeSummary
   daily: DailyRow[]
   ageSex: AgeSexRow[]
-  palikas: PalikaRow[]
+  palikas: PalikaRow[] | null
+  wards: WardRow[] | null
 }
 
 export interface FacilityPoint {
@@ -126,7 +133,12 @@ async function getJson<T>(path: string): Promise<T> {
 }
 
 export const api = {
-  dashboard: () => getJson<DashboardData>('/api/dashboard-data'),
+  dashboard: (params?: { scope: 'local_level' | 'ward'; code: string }) =>
+    getJson<DashboardData>(
+      params
+        ? `/api/dashboard-data?scope=${params.scope}&code=${encodeURIComponent(params.code)}`
+        : '/api/dashboard-data'
+    ),
   map: () => getJson<MapData>('/api/map-data'),
   palika: (code: string) => getJson<PalikaDetail>(`/api/palika-data?code=${encodeURIComponent(code)}`),
   ward: (code: string) => getJson<WardDetail>(`/api/ward-data?code=${encodeURIComponent(code)}`),
