@@ -69,6 +69,15 @@ export interface WardRow {
   coverage_pct: number
 }
 
+export interface NonReportingWard {
+  ward_code: string
+  local_level_code: string
+  local_level_name: string
+  ward_no: number
+  population: number
+  last_report_date: string | null
+}
+
 export interface DuplicateReviewRow {
   ward_code: string
   local_level_code: string
@@ -91,6 +100,7 @@ export interface DashboardData {
   palikas: PalikaRow[] | null
   wards: WardRow[] | null
   duplicates: DuplicateReviewRow[] | null
+  notReportingToday: { today: string; wards: NonReportingWard[] } | null
 }
 
 export interface FacilityPoint {

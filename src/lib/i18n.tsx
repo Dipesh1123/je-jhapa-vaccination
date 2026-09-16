@@ -57,6 +57,12 @@ const translations = {
   female: { en: 'Female', ne: 'महिला' },
   male: { en: 'Male', ne: 'पुरुष' },
 
+  // Non-reporting wards panel
+  nonReportingTitle: { en: 'Not yet reported today', ne: 'आज अझै प्रतिवेदन नआएका' },
+  nonReportingDesc: { en: 'Wards with no report received yet for {date}. Not necessarily a problem early in the day - worth a call if it\'s still empty by evening.', ne: '{date} का लागि अझै कुनै प्रतिवेदन नआएका वडाहरू। दिनको सुरुमा यो समस्या नहुन सक्छ — साँझसम्म पनि खाली भए फोन गर्नु उपयुक्त हुन्छ।' },
+  allWardsReportedToday: { en: 'All wards have reported today.', ne: 'सबै वडाले आज प्रतिवेदन गरिसकेका छन्।' },
+  neverReported: { en: 'Never', ne: 'कहिल्यै छैन' },
+
   // Duplicate review banner
   duplicateReviewTitle: { en: 'Flagged for review — possible duplicate reports', ne: 'समीक्षाका लागि झण्डा — सम्भावित नक्कल प्रतिवेदन' },
   duplicateReviewDesc: {

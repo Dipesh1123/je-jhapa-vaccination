@@ -10,11 +10,17 @@
 // a static view can parameterize.
 
 import { getBigQuery, DATASET, LOCATION } from "./_lib/bigquery.js";
-import { CAMPAIGN_START, CAMPAIGN_END } from "./_lib/campaign.js";
+import { CAMPAIGN_START, CAMPAIGN_END, todayNpt } from "./_lib/campaign.js";
 import { flattenRow } from "./_lib/csv.js";
 
 async function districtScope(bq) {
-  const [[districtTarget], daily, ageSex, palikas, duplicates] = await Promise.all([
+  const today = todayNpt();
+  // Only meaningful once the campaign is actually running - before day 1
+  // every ward legitimately has nothing to report yet, and the list would
+  // just be "all 131" every single day pre-launch.
+  const campaignActive = today >= CAMPAIGN_START && today <= CAMPAIGN_END;
+
+  const [[districtTarget], daily, ageSex, palikas, duplicates, notReportingToday] = await Promise.all([
     bq.query({
       query: `SELECT SUM(je_target) AS je_target, SUM(population) AS population
               FROM \`${DATASET}.ref_local_level\``,
@@ -36,6 +42,17 @@ async function districtScope(bq) {
       query: `SELECT * FROM \`${DATASET}.v_duplicate_review\` ORDER BY report_date_ad DESC, local_level_name, ward_no`,
       location: LOCATION,
     }).then(([rows]) => rows),
+    campaignActive
+      ? bq.query({
+          query: `
+            SELECT ward_code, local_level_code, local_level_name, ward_no, population, last_report_date
+            FROM \`${DATASET}.v_ward_cumulative\`
+            WHERE last_report_date IS NULL OR last_report_date != CAST(@today AS DATE)
+            ORDER BY local_level_name, ward_no`,
+          params: { today },
+          location: LOCATION,
+        }).then(([rows]) => rows)
+      : Promise.resolve([]),
   ]);
 
   const vaccinated = daily.length > 0 ? Number(daily[daily.length - 1].cumulative_doses) : 0;
@@ -59,6 +76,7 @@ async function districtScope(bq) {
     palikas: palikas.map(flattenRow),
     wards: null,
     duplicates: duplicates.map(flattenRow),
+    notReportingToday: campaignActive ? { today, wards: notReportingToday.map(flattenRow) } : null,
   };
 }
 
@@ -149,6 +167,7 @@ async function narrowScope(bq, scope, code) {
     palikas: null,
     wards: wards ? wards.map(flattenRow) : null,
     duplicates: null,
+    notReportingToday: null,
   };
 }
 

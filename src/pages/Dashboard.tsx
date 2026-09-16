@@ -10,6 +10,7 @@ import { AgeSexChart } from '../components/charts/AgeSexChart'
 import { PalikaLeagueTable } from '../components/PalikaLeagueTable'
 import { WardTable } from '../components/WardTable'
 import { DuplicateReviewBanner } from '../components/DuplicateReviewBanner'
+import { NonReportingWards } from '../components/NonReportingWards'
 import { ErrorBanner } from '../components/ErrorBanner'
 import { Spinner } from '../components/Spinner'
 
@@ -130,6 +131,10 @@ export function Dashboard() {
         <CoverageTrendChart daily={daily} campaignStart={summary.campaign_start} campaignEnd={summary.campaign_end} />
         <AgeSexChart ageSex={ageSex} />
       </div>
+
+      {data.scope === 'district' && data.notReportingToday && (
+        <NonReportingWards today={data.notReportingToday.today} wards={data.notReportingToday.wards} />
+      )}
 
       {data.scope === 'district' && data.duplicates && data.duplicates.length > 0 && (
         <DuplicateReviewBanner rows={data.duplicates} />
