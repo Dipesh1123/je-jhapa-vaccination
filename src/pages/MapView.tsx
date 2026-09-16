@@ -6,7 +6,7 @@ import type { Map as MlMap, Popup } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Link } from 'react-router-dom'
 import { Table } from 'lucide-react'
-import { api, type MapData, type PalikaRow } from '../lib/api'
+import { api, type MapData, type PalikaRow, type WardRow } from '../lib/api'
 import { coverageFillExpression } from '../lib/geo'
 import { sequentialBlue } from '../lib/palette'
 import { formatNumeral } from '../lib/nepali'
@@ -182,6 +182,85 @@ export function MapView() {
       })
       .catch((e) => setError(String(e)))
   }, [mapReady, data])
+
+  // Ward choropleth - same pattern as the palika layer, joined on ward_code.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady || !data || !wardGeoAvailable) return
+
+    fetch('/data/jhapa-wards.geojson')
+      .then((r) => r.json())
+      .then((geojson: GeoJSON.FeatureCollection) => {
+        const byCode = new Map(data.wards.map((w: WardRow) => [w.ward_code, w]))
+        for (const f of geojson.features) {
+          const code = f.properties?.code as string
+          const row = byCode.get(code)
+          f.properties = {
+            ...f.properties,
+            local_level_name: row?.local_level_name ?? '',
+            coverage_pct: row?.coverage_pct ?? 0,
+            total_doses: row?.total_doses ?? 0,
+          }
+        }
+
+        if (map.getSource('wards')) {
+          ;(map.getSource('wards') as maplibregl.GeoJSONSource).setData(geojson)
+        } else {
+          map.addSource('wards', { type: 'geojson', data: geojson })
+          map.addLayer({
+            id: 'wards-fill',
+            type: 'fill',
+            source: 'wards',
+            layout: { visibility: 'none' },
+            paint: { 'fill-color': coverageFillExpression('coverage_pct'), 'fill-opacity': 0.75 },
+          })
+          map.addLayer({
+            id: 'wards-outline',
+            type: 'line',
+            source: 'wards',
+            layout: { visibility: 'none' },
+            paint: { 'line-color': '#ffffff', 'line-width': 0.75 },
+          })
+
+          map.on('mousemove', 'wards-fill', (e) => {
+            map.getCanvas().style.cursor = 'pointer'
+            const f = e.features?.[0]
+            if (!f || !popupRef.current) return
+            const p = f.properties as { local_level_name: string; ward_no: number; coverage_pct: number; total_doses: number }
+            const { lang: l, t: tr } = i18nRef.current
+            popupRef.current
+              .setLngLat(e.lngLat)
+              .setHTML(
+                `<div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:13px">
+                   <strong>${p.local_level_name} ${tr('wardLabel', { n: formatNumeral(p.ward_no, l) })}</strong><br/>
+                   ${tr('popupProgress')}: ${formatNumeral(p.coverage_pct.toFixed(1), l)}%<br/>
+                   ${tr('popupVaccinated')}: ${formatNumeral(Math.round(p.total_doses).toLocaleString(), l)}
+                 </div>`
+              )
+              .addTo(map)
+          })
+          map.on('mouseleave', 'wards-fill', () => {
+            map.getCanvas().style.cursor = ''
+            popupRef.current?.remove()
+          })
+        }
+      })
+      .catch((e) => setError(String(e)))
+  }, [mapReady, data, wardGeoAvailable])
+
+  // Toggle which choropleth is visible - both layer pairs stay loaded, only
+  // their `visibility` layout property flips, so switching back and forth
+  // is instant and never re-fetches.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady) return
+    for (const id of ['palikas-fill', 'palikas-outline']) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', layer === 'palika' ? 'visible' : 'none')
+    }
+    for (const id of ['wards-fill', 'wards-outline']) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', layer === 'ward' ? 'visible' : 'none')
+    }
+  }, [layer, mapReady, data, wardGeoAvailable])
 
   // Facility points.
   useEffect(() => {
