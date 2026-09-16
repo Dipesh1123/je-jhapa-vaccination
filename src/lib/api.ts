@@ -95,6 +95,10 @@ export interface PalikaDetail {
   wards: WardRow[]
 }
 
+export interface WardDetail {
+  ward: WardRow
+}
+
 export interface CommodityRow {
   ward_code: string
   local_level_code: string
@@ -125,5 +129,6 @@ export const api = {
   dashboard: () => getJson<DashboardData>('/api/dashboard-data'),
   map: () => getJson<MapData>('/api/map-data'),
   palika: (code: string) => getJson<PalikaDetail>(`/api/palika-data?code=${encodeURIComponent(code)}`),
+  ward: (code: string) => getJson<WardDetail>(`/api/ward-data?code=${encodeURIComponent(code)}`),
   commodity: () => getJson<{ rows: CommodityRow[] }>('/api/commodity-data'),
 }

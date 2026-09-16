@@ -73,6 +73,13 @@ const translations = {
   noReportYet: { en: 'No report yet', ne: 'प्रतिवेदन आएको छैन' },
   target: { en: 'target', ne: 'लक्ष्य' },
 
+  // Ward detail page
+  backToPalika: { en: 'Back to {name}', ne: '{name} मा फर्कनुहोस्' },
+  wardProfileSubtitle: { en: 'Ward-level profile', ne: 'वडास्तरीय प्रोफाइल' },
+  colReportsReceived: { en: 'Reports received', ne: 'प्राप्त प्रतिवेदन' },
+  colAefiMinor: { en: 'AEFI — minor', ne: 'AEFI — सामान्य' },
+  colAefiSerious: { en: 'AEFI — serious', ne: 'AEFI — गम्भीर' },
+
   // Map page
   mapTitle: { en: 'Map', ne: 'नक्सा' },
   mapSubtitle: { en: 'Local-level map and facility locations by progress %', ne: 'प्रगति % अनुसार स्थानीय तहको नक्सा र संस्था स्थानहरू' },
@@ -80,6 +87,9 @@ const translations = {
   layerWard: { en: 'Ward', ne: 'वडा' },
   wardGeoUnavailable: { en: 'Ward boundary data not yet available', ne: 'वडा सीमाना डेटा अझै उपलब्ध छैन' },
   viewAsTable: { en: 'View as table', ne: 'तालिका रूपमा हेर्नुहोस्' },
+  mapBackToDistrict: { en: '← All of Jhapa', ne: '← सम्पूर्ण झापा' },
+  mapClickPalikaHint: { en: 'Click a local level to see its wards', ne: 'वडाहरू हेर्न स्थानीय तहमा क्लिक गर्नुहोस्' },
+  mapClickWardHint: { en: 'Click a ward for its profile', ne: 'प्रोफाइलका लागि वडामा क्लिक गर्नुहोस्' },
   legendProgress: { en: 'Progress %', ne: 'प्रगति %' },
   wardFallbackMsg: { en: 'Official ward boundary data is not yet available. See progress by local level below, or the ward table for each local level on the ', ne: 'वडा सीमानाको आधिकारिक डेटा अझै प्राप्त भएको छैन। तल स्थानीय तह अनुसार प्रगति हेर्नुहोस्, वा प्रत्येक स्थानीय तहको वडागत तालिकाका लागि ' },
   wardFallbackLink: { en: 'dashboard table', ne: 'ड्यासबोर्डको तालिका' },

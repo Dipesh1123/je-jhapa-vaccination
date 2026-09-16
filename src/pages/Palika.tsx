@@ -58,8 +58,10 @@ export function Palika() {
             </thead>
             <tbody>
               {wards.map((w) => (
-                <tr key={w.ward_code} className="border-b border-slate-50 last:border-0">
-                  <td className="px-4 py-2.5 font-medium text-slate-700">{n(w.ward_no)}</td>
+                <tr key={w.ward_code} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/60">
+                  <td className="px-4 py-2.5 font-medium">
+                    <Link to={`/ward/${w.ward_code}`} className="text-blue-700 hover:underline">{n(w.ward_no)}</Link>
+                  </td>
                   <td className="px-4 py-2.5 text-slate-600 tabular-nums">{n(w.population.toLocaleString())}</td>
                   <td className="px-4 py-2.5 text-slate-600 tabular-nums">{n(w.total_doses.toLocaleString())}</td>
                   <td className="px-4 py-2.5">

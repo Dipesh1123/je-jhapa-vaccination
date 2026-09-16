@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as maplibregl from 'maplibre-gl'
 import type { Map as MlMap, Popup } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Table } from 'lucide-react'
 import { api, type MapData, type PalikaRow, type WardRow } from '../lib/api'
 import { coverageFillExpression } from '../lib/geo'
@@ -46,8 +46,29 @@ maplibregl.setWorkerUrl('/maplibre-gl-worker.mjs')
 
 type Layer = 'palika' | 'ward'
 
+// Bounding box of a GeoJSON geometry, for zooming to a clicked local level.
+// Recurses through Polygon/MultiPolygon coordinate nesting uniformly rather
+// than branching on geometry type.
+function bboxOfGeometry(geom: GeoJSON.Geometry): [[number, number], [number, number]] {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity
+  function visit(node: unknown): void {
+    if (Array.isArray(node) && typeof node[0] === 'number') {
+      const [x, y] = node as [number, number]
+      if (x < minX) minX = x
+      if (y < minY) minY = y
+      if (x > maxX) maxX = x
+      if (y > maxY) maxY = y
+    } else if (Array.isArray(node)) {
+      for (const child of node) visit(child)
+    }
+  }
+  visit((geom as { coordinates: unknown }).coordinates)
+  return [[minX, minY], [maxX, maxY]]
+}
+
 export function MapView() {
   const { lang, t } = useLang()
+  const navigate = useNavigate()
   // The mousemove/hover handlers below are attached once, inside an effect
   // that only re-runs when the map data changes - not on every render - so
   // a closure capturing `t`/`lang` directly would freeze at whatever
@@ -55,6 +76,10 @@ export function MapView() {
   // translator at hover time instead.
   const i18nRef = useRef({ lang, t })
   useEffect(() => { i18nRef.current = { lang, t } }, [lang, t])
+  // Same staleness problem as i18nRef - the click handler is attached once
+  // inside an effect, so it needs a ref rather than closing over `navigate`.
+  const navigateRef = useRef(navigate)
+  useEffect(() => { navigateRef.current = navigate }, [navigate])
 
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MlMap | null>(null)
@@ -65,6 +90,16 @@ export function MapView() {
   const [layer, setLayer] = useState<Layer>('palika')
   const [wardGeoAvailable, setWardGeoAvailable] = useState<boolean | null>(null)
   const [mapReady, setMapReady] = useState(false)
+  // Set when a local level was drilled into by clicking it on the map (as
+  // opposed to the manual Ward toggle, which shows all 131 at once) - scopes
+  // the ward layer to just that local level's wards.
+  const [selectedPalika, setSelectedPalika] = useState<{ code: string; name: string } | null>(null)
+
+  function resetToDistrict() {
+    setSelectedPalika(null)
+    setLayer('palika')
+    mapRef.current?.fitBounds(JHAPA_BOUNDS, { padding: 24 })
+  }
 
   useEffect(() => {
     api.map().then(setData).catch((e) => setError(String(e)))
@@ -180,6 +215,15 @@ export function MapView() {
             map.getCanvas().style.cursor = ''
             popupRef.current?.remove()
           })
+          map.on('click', 'palikas-fill', (e) => {
+            const f = e.features?.[0]
+            if (!f) return
+            const code = f.properties?.code as string
+            const name = (f.properties as { name: string }).name
+            setSelectedPalika({ code, name })
+            setLayer('ward')
+            map.fitBounds(bboxOfGeometry(f.geometry), { padding: 40 })
+          })
         }
       })
       .catch((e) => setError(String(e)))
@@ -245,6 +289,11 @@ export function MapView() {
             map.getCanvas().style.cursor = ''
             popupRef.current?.remove()
           })
+          map.on('click', 'wards-fill', (e) => {
+            const f = e.features?.[0]
+            if (!f) return
+            navigateRef.current(`/ward/${f.properties?.code as string}`)
+          })
         }
       })
       .catch((e) => setError(String(e)))
@@ -263,6 +312,19 @@ export function MapView() {
       if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', layer === 'ward' ? 'visible' : 'none')
     }
   }, [layer, mapReady, data, wardGeoAvailable])
+
+  // Scopes the ward layer to one local level after a drill-down click; the
+  // manual Ward toggle (selectedPalika === null) shows all 131 instead.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady) return
+    const filter = selectedPalika
+      ? (['==', ['get', 'local_level_code'], selectedPalika.code] as maplibregl.FilterSpecification)
+      : null
+    for (const id of ['wards-fill', 'wards-outline']) {
+      if (map.getLayer(id)) map.setFilter(id, filter)
+    }
+  }, [selectedPalika, mapReady, data, wardGeoAvailable])
 
   // Facility points.
   useEffect(() => {
@@ -317,21 +379,28 @@ export function MapView() {
     <div className="h-full flex flex-col">
       <div className="p-4 md:p-6 pb-2 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg font-semibold text-slate-800">{t('mapTitle')}</h1>
+          <h1 className="text-lg font-semibold text-slate-800">
+            {selectedPalika ? selectedPalika.name : t('mapTitle')}
+          </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            {t('mapSubtitle')}
+            {layer === 'palika' ? t('mapClickPalikaHint') : selectedPalika ? t('mapClickWardHint') : t('mapSubtitle')}
           </p>
         </div>
         <div className="flex items-center gap-3">
+          {selectedPalika && (
+            <button onClick={resetToDistrict} className="text-sm text-blue-700 hover:underline whitespace-nowrap">
+              {t('mapBackToDistrict')}
+            </button>
+          )}
           <div className="flex bg-white border border-slate-200 rounded-lg p-0.5">
             <button
-              onClick={() => setLayer('palika')}
+              onClick={resetToDistrict}
               className={`px-3 py-1.5 text-sm rounded-md ${layer === 'palika' ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-500'}`}
             >
               {t('layerLocalLevel')}
             </button>
             <button
-              onClick={() => wardGeoAvailable && setLayer('ward')}
+              onClick={() => { if (wardGeoAvailable) { setSelectedPalika(null); setLayer('ward') } }}
               disabled={!wardGeoAvailable}
               title={wardGeoAvailable === false ? t('wardGeoUnavailable') : undefined}
               className={`px-3 py-1.5 text-sm rounded-md ${layer === 'ward' ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-500'} ${!wardGeoAvailable ? 'opacity-40 cursor-not-allowed' : ''}`}
