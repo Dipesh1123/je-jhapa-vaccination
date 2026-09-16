@@ -22,13 +22,15 @@ const JHAPA_BOUNDS: [[number, number], [number, number]] = [
   [88.1906, 26.8055],
 ]
 
-// A wider pad around the district so panning/zooming still shows a little
-// neighbouring context (rivers and roads don't stop at the border), without
-// letting the view wander off into the rest of Nepal or India - the ask
-// this responds to is "only Jhapa district, not others".
+// Keeps panning from wandering off into the rest of Nepal or India. The
+// district mask (below) is what actually guarantees only Jhapa is ever
+// visible regardless of zoom/pan, so this only needs enough room that the
+// zoom-out control has real headroom before MapLibre's own maxBounds-derived
+// zoom floor kicks in - a tight box here was capping zoom-out after one
+// click, which read as the control being broken.
 const MAX_BOUNDS: [[number, number], [number, number]] = [
-  [87.45, 26.15],
-  [88.38, 27.0],
+  [86.9, 25.7],
+  [88.9, 27.4],
 ]
 
 // Free, no-API-key basemap - keeps this at $0 like everything else here.
@@ -82,7 +84,6 @@ export function MapView() {
       bounds: JHAPA_BOUNDS,
       fitBoundsOptions: { padding: 24 },
       maxBounds: MAX_BOUNDS,
-      minZoom: 8,
     })
     map.addControl(new maplibregl.NavigationControl(), 'top-right')
     map.on('load', () => {
