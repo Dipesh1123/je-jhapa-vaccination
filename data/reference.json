@@ -1,0 +1,933 @@
+{
+  "district": "Jhapa",
+  "fiscal_year": "2083/84",
+  "campaign_start": "2026-10-05",
+  "campaign_end": "2026-10-19",
+  "population": 1027747,
+  "je_target": 493318.56,
+  "local_level_count": 15,
+  "ward_count": 131,
+  "local_levels": [
+    {
+      "code": "mechinagar_municipality",
+      "name": "Mechinagar Municipality",
+      "population": 136510,
+      "je_target": 65524.8,
+      "ward_count": 15,
+      "wards": [
+        {
+          "code": "mechinagar_municipality_1",
+          "ward_no": 1,
+          "population": 6478,
+          "je_target": 3109.44
+        },
+        {
+          "code": "mechinagar_municipality_2",
+          "ward_no": 2,
+          "population": 6940,
+          "je_target": 3331.2
+        },
+        {
+          "code": "mechinagar_municipality_3",
+          "ward_no": 3,
+          "population": 7375,
+          "je_target": 3540.0
+        },
+        {
+          "code": "mechinagar_municipality_4",
+          "ward_no": 4,
+          "population": 5531,
+          "je_target": 2654.88
+        },
+        {
+          "code": "mechinagar_municipality_5",
+          "ward_no": 5,
+          "population": 5457,
+          "je_target": 2619.36
+        },
+        {
+          "code": "mechinagar_municipality_6",
+          "ward_no": 6,
+          "population": 16161,
+          "je_target": 7757.28
+        },
+        {
+          "code": "mechinagar_municipality_7",
+          "ward_no": 7,
+          "population": 13537,
+          "je_target": 6497.76
+        },
+        {
+          "code": "mechinagar_municipality_8",
+          "ward_no": 8,
+          "population": 8527,
+          "je_target": 4092.96
+        },
+        {
+          "code": "mechinagar_municipality_9",
+          "ward_no": 9,
+          "population": 12286,
+          "je_target": 5897.28
+        },
+        {
+          "code": "mechinagar_municipality_10",
+          "ward_no": 10,
+          "population": 15923,
+          "je_target": 7643.04
+        },
+        {
+          "code": "mechinagar_municipality_11",
+          "ward_no": 11,
+          "population": 6760,
+          "je_target": 3244.8
+        },
+        {
+          "code": "mechinagar_municipality_12",
+          "ward_no": 12,
+          "population": 8356,
+          "je_target": 4010.88
+        },
+        {
+          "code": "mechinagar_municipality_13",
+          "ward_no": 13,
+          "population": 7618,
+          "je_target": 3656.64
+        },
+        {
+          "code": "mechinagar_municipality_14",
+          "ward_no": 14,
+          "population": 7074,
+          "je_target": 3395.52
+        },
+        {
+          "code": "mechinagar_municipality_15",
+          "ward_no": 15,
+          "population": 8487,
+          "je_target": 4073.76
+        }
+      ]
+    },
+    {
+      "code": "buddhashanti_gaunpalika",
+      "name": "Buddhashanti Gaunpalika",
+      "population": 54553,
+      "je_target": 26185.44,
+      "ward_count": 7,
+      "wards": [
+        {
+          "code": "buddhashanti_gaunpalika_1",
+          "ward_no": 1,
+          "population": 10670,
+          "je_target": 5121.6
+        },
+        {
+          "code": "buddhashanti_gaunpalika_2",
+          "ward_no": 2,
+          "population": 9393,
+          "je_target": 4508.64
+        },
+        {
+          "code": "buddhashanti_gaunpalika_3",
+          "ward_no": 3,
+          "population": 12660,
+          "je_target": 6076.8
+        },
+        {
+          "code": "buddhashanti_gaunpalika_4",
+          "ward_no": 4,
+          "population": 12054,
+          "je_target": 5785.92
+        },
+        {
+          "code": "buddhashanti_gaunpalika_5",
+          "ward_no": 5,
+          "population": 4123,
+          "je_target": 1979.04
+        },
+        {
+          "code": "buddhashanti_gaunpalika_6",
+          "ward_no": 6,
+          "population": 3304,
+          "je_target": 1585.92
+        },
+        {
+          "code": "buddhashanti_gaunpalika_7",
+          "ward_no": 7,
+          "population": 2349,
+          "je_target": 1127.52
+        }
+      ]
+    },
+    {
+      "code": "arjundhara_municipality",
+      "name": "Arjundhara Municipality",
+      "population": 88888,
+      "je_target": 42666.24,
+      "ward_count": 11,
+      "wards": [
+        {
+          "code": "arjundhara_municipality_1",
+          "ward_no": 1,
+          "population": 6994,
+          "je_target": 3357.12
+        },
+        {
+          "code": "arjundhara_municipality_2",
+          "ward_no": 2,
+          "population": 5836,
+          "je_target": 2801.28
+        },
+        {
+          "code": "arjundhara_municipality_3",
+          "ward_no": 3,
+          "population": 7049,
+          "je_target": 3383.52
+        },
+        {
+          "code": "arjundhara_municipality_4",
+          "ward_no": 4,
+          "population": 6745,
+          "je_target": 3237.6
+        },
+        {
+          "code": "arjundhara_municipality_5",
+          "ward_no": 5,
+          "population": 10360,
+          "je_target": 4972.8
+        },
+        {
+          "code": "arjundhara_municipality_6",
+          "ward_no": 6,
+          "population": 12099,
+          "je_target": 5807.52
+        },
+        {
+          "code": "arjundhara_municipality_7",
+          "ward_no": 7,
+          "population": 4939,
+          "je_target": 2370.72
+        },
+        {
+          "code": "arjundhara_municipality_8",
+          "ward_no": 8,
+          "population": 6905,
+          "je_target": 3314.4
+        },
+        {
+          "code": "arjundhara_municipality_9",
+          "ward_no": 9,
+          "population": 8301,
+          "je_target": 3984.48
+        },
+        {
+          "code": "arjundhara_municipality_10",
+          "ward_no": 10,
+          "population": 7266,
+          "je_target": 3487.68
+        },
+        {
+          "code": "arjundhara_municipality_11",
+          "ward_no": 11,
+          "population": 12394,
+          "je_target": 5949.12
+        }
+      ]
+    },
+    {
+      "code": "kankai_municipality",
+      "name": "Kankai Municipality",
+      "population": 54681,
+      "je_target": 26246.88,
+      "ward_count": 9,
+      "wards": [
+        {
+          "code": "kankai_municipality_1",
+          "ward_no": 1,
+          "population": 5097,
+          "je_target": 2446.56
+        },
+        {
+          "code": "kankai_municipality_2",
+          "ward_no": 2,
+          "population": 5126,
+          "je_target": 2460.48
+        },
+        {
+          "code": "kankai_municipality_3",
+          "ward_no": 3,
+          "population": 13610,
+          "je_target": 6532.8
+        },
+        {
+          "code": "kankai_municipality_4",
+          "ward_no": 4,
+          "population": 7634,
+          "je_target": 3664.32
+        },
+        {
+          "code": "kankai_municipality_5",
+          "ward_no": 5,
+          "population": 6548,
+          "je_target": 3143.04
+        },
+        {
+          "code": "kankai_municipality_6",
+          "ward_no": 6,
+          "population": 2725,
+          "je_target": 1308.0
+        },
+        {
+          "code": "kankai_municipality_7",
+          "ward_no": 7,
+          "population": 4662,
+          "je_target": 2237.76
+        },
+        {
+          "code": "kankai_municipality_8",
+          "ward_no": 8,
+          "population": 5552,
+          "je_target": 2664.96
+        },
+        {
+          "code": "kankai_municipality_9",
+          "ward_no": 9,
+          "population": 3727,
+          "je_target": 1788.96
+        }
+      ]
+    },
+    {
+      "code": "shivasatakshi_municipality",
+      "name": "Shivasatakshi Municipality",
+      "population": 76040,
+      "je_target": 36499.2,
+      "ward_count": 11,
+      "wards": [
+        {
+          "code": "shivasatakshi_municipality_1",
+          "ward_no": 1,
+          "population": 6369,
+          "je_target": 3057.12
+        },
+        {
+          "code": "shivasatakshi_municipality_2",
+          "ward_no": 2,
+          "population": 6172,
+          "je_target": 2962.56
+        },
+        {
+          "code": "shivasatakshi_municipality_3",
+          "ward_no": 3,
+          "population": 4635,
+          "je_target": 2224.8
+        },
+        {
+          "code": "shivasatakshi_municipality_4",
+          "ward_no": 4,
+          "population": 6399,
+          "je_target": 3071.52
+        },
+        {
+          "code": "shivasatakshi_municipality_5",
+          "ward_no": 5,
+          "population": 4767,
+          "je_target": 2288.16
+        },
+        {
+          "code": "shivasatakshi_municipality_6",
+          "ward_no": 6,
+          "population": 6247,
+          "je_target": 2998.56
+        },
+        {
+          "code": "shivasatakshi_municipality_7",
+          "ward_no": 7,
+          "population": 8247,
+          "je_target": 3958.56
+        },
+        {
+          "code": "shivasatakshi_municipality_8",
+          "ward_no": 8,
+          "population": 9607,
+          "je_target": 4611.36
+        },
+        {
+          "code": "shivasatakshi_municipality_9",
+          "ward_no": 9,
+          "population": 6800,
+          "je_target": 3264.0
+        },
+        {
+          "code": "shivasatakshi_municipality_10",
+          "ward_no": 10,
+          "population": 7567,
+          "je_target": 3632.16
+        },
+        {
+          "code": "shivasatakshi_municipality_11",
+          "ward_no": 11,
+          "population": 9230,
+          "je_target": 4430.4
+        }
+      ]
+    },
+    {
+      "code": "kamal_gaunpalika",
+      "name": "Kamal Gaunpalika",
+      "population": 55141,
+      "je_target": 26467.68,
+      "ward_count": 7,
+      "wards": [
+        {
+          "code": "kamal_gaunpalika_1",
+          "ward_no": 1,
+          "population": 6877,
+          "je_target": 3300.96
+        },
+        {
+          "code": "kamal_gaunpalika_2",
+          "ward_no": 2,
+          "population": 6807,
+          "je_target": 3267.36
+        },
+        {
+          "code": "kamal_gaunpalika_3",
+          "ward_no": 3,
+          "population": 6565,
+          "je_target": 3151.2
+        },
+        {
+          "code": "kamal_gaunpalika_4",
+          "ward_no": 4,
+          "population": 8179,
+          "je_target": 3925.92
+        },
+        {
+          "code": "kamal_gaunpalika_5",
+          "ward_no": 5,
+          "population": 11141,
+          "je_target": 5347.68
+        },
+        {
+          "code": "kamal_gaunpalika_6",
+          "ward_no": 6,
+          "population": 8092,
+          "je_target": 3884.16
+        },
+        {
+          "code": "kamal_gaunpalika_7",
+          "ward_no": 7,
+          "population": 7480,
+          "je_target": 3590.4
+        }
+      ]
+    },
+    {
+      "code": "damak_municipality",
+      "name": "Damak Municipality",
+      "population": 115301,
+      "je_target": 55344.48,
+      "ward_count": 10,
+      "wards": [
+        {
+          "code": "damak_municipality_1",
+          "ward_no": 1,
+          "population": 14924,
+          "je_target": 7163.52
+        },
+        {
+          "code": "damak_municipality_2",
+          "ward_no": 2,
+          "population": 12529,
+          "je_target": 6013.92
+        },
+        {
+          "code": "damak_municipality_3",
+          "ward_no": 3,
+          "population": 11756,
+          "je_target": 5642.88
+        },
+        {
+          "code": "damak_municipality_4",
+          "ward_no": 4,
+          "population": 12078,
+          "je_target": 5797.44
+        },
+        {
+          "code": "damak_municipality_5",
+          "ward_no": 5,
+          "population": 16384,
+          "je_target": 7864.32
+        },
+        {
+          "code": "damak_municipality_6",
+          "ward_no": 6,
+          "population": 6847,
+          "je_target": 3286.56
+        },
+        {
+          "code": "damak_municipality_7",
+          "ward_no": 7,
+          "population": 7961,
+          "je_target": 3821.28
+        },
+        {
+          "code": "damak_municipality_8",
+          "ward_no": 8,
+          "population": 11478,
+          "je_target": 5509.44
+        },
+        {
+          "code": "damak_municipality_9",
+          "ward_no": 9,
+          "population": 15078,
+          "je_target": 7237.44
+        },
+        {
+          "code": "damak_municipality_10",
+          "ward_no": 10,
+          "population": 6266,
+          "je_target": 3007.68
+        }
+      ]
+    },
+    {
+      "code": "gauradaha_municipality",
+      "name": "Gauradaha Municipality",
+      "population": 62565,
+      "je_target": 30031.2,
+      "ward_count": 9,
+      "wards": [
+        {
+          "code": "gauradaha_municipality_1",
+          "ward_no": 1,
+          "population": 10136,
+          "je_target": 4865.28
+        },
+        {
+          "code": "gauradaha_municipality_2",
+          "ward_no": 2,
+          "population": 5101,
+          "je_target": 2448.48
+        },
+        {
+          "code": "gauradaha_municipality_3",
+          "ward_no": 3,
+          "population": 4836,
+          "je_target": 2321.28
+        },
+        {
+          "code": "gauradaha_municipality_4",
+          "ward_no": 4,
+          "population": 7697,
+          "je_target": 3694.56
+        },
+        {
+          "code": "gauradaha_municipality_5",
+          "ward_no": 5,
+          "population": 8418,
+          "je_target": 4040.64
+        },
+        {
+          "code": "gauradaha_municipality_6",
+          "ward_no": 6,
+          "population": 6965,
+          "je_target": 3343.2
+        },
+        {
+          "code": "gauradaha_municipality_7",
+          "ward_no": 7,
+          "population": 7137,
+          "je_target": 3425.76
+        },
+        {
+          "code": "gauradaha_municipality_8",
+          "ward_no": 8,
+          "population": 5799,
+          "je_target": 2783.52
+        },
+        {
+          "code": "gauradaha_municipality_9",
+          "ward_no": 9,
+          "population": 6476,
+          "je_target": 3108.48
+        }
+      ]
+    },
+    {
+      "code": "gauriganj_gaunpalika",
+      "name": "Gauriganj Gaunpalika",
+      "population": 35696,
+      "je_target": 17134.08,
+      "ward_count": 6,
+      "wards": [
+        {
+          "code": "gauriganj_gaunpalika_1",
+          "ward_no": 1,
+          "population": 7239,
+          "je_target": 3474.72
+        },
+        {
+          "code": "gauriganj_gaunpalika_2",
+          "ward_no": 2,
+          "population": 6257,
+          "je_target": 3003.36
+        },
+        {
+          "code": "gauriganj_gaunpalika_3",
+          "ward_no": 3,
+          "population": 7126,
+          "je_target": 3420.48
+        },
+        {
+          "code": "gauriganj_gaunpalika_4",
+          "ward_no": 4,
+          "population": 4888,
+          "je_target": 2346.24
+        },
+        {
+          "code": "gauriganj_gaunpalika_5",
+          "ward_no": 5,
+          "population": 4300,
+          "je_target": 2064.0
+        },
+        {
+          "code": "gauriganj_gaunpalika_6",
+          "ward_no": 6,
+          "population": 5886,
+          "je_target": 2825.28
+        }
+      ]
+    },
+    {
+      "code": "jhapa_gaunpalika",
+      "name": "Jhapa Gaunpalika",
+      "population": 39698,
+      "je_target": 19055.04,
+      "ward_count": 7,
+      "wards": [
+        {
+          "code": "jhapa_gaunpalika_1",
+          "ward_no": 1,
+          "population": 5005,
+          "je_target": 2402.4
+        },
+        {
+          "code": "jhapa_gaunpalika_2",
+          "ward_no": 2,
+          "population": 5231,
+          "je_target": 2510.88
+        },
+        {
+          "code": "jhapa_gaunpalika_3",
+          "ward_no": 3,
+          "population": 6386,
+          "je_target": 3065.28
+        },
+        {
+          "code": "jhapa_gaunpalika_4",
+          "ward_no": 4,
+          "population": 6392,
+          "je_target": 3068.16
+        },
+        {
+          "code": "jhapa_gaunpalika_5",
+          "ward_no": 5,
+          "population": 6200,
+          "je_target": 2976.0
+        },
+        {
+          "code": "jhapa_gaunpalika_6",
+          "ward_no": 6,
+          "population": 5766,
+          "je_target": 2767.68
+        },
+        {
+          "code": "jhapa_gaunpalika_7",
+          "ward_no": 7,
+          "population": 4718,
+          "je_target": 2264.64
+        }
+      ]
+    },
+    {
+      "code": "barhadashi_gaunpalika",
+      "name": "Barhadashi Gaunpalika",
+      "population": 38172,
+      "je_target": 18322.56,
+      "ward_count": 7,
+      "wards": [
+        {
+          "code": "barhadashi_gaunpalika_1",
+          "ward_no": 1,
+          "population": 4582,
+          "je_target": 2199.36
+        },
+        {
+          "code": "barhadashi_gaunpalika_2",
+          "ward_no": 2,
+          "population": 6302,
+          "je_target": 3024.96
+        },
+        {
+          "code": "barhadashi_gaunpalika_3",
+          "ward_no": 3,
+          "population": 6775,
+          "je_target": 3252.0
+        },
+        {
+          "code": "barhadashi_gaunpalika_4",
+          "ward_no": 4,
+          "population": 4524,
+          "je_target": 2171.52
+        },
+        {
+          "code": "barhadashi_gaunpalika_5",
+          "ward_no": 5,
+          "population": 7332,
+          "je_target": 3519.36
+        },
+        {
+          "code": "barhadashi_gaunpalika_6",
+          "ward_no": 6,
+          "population": 5370,
+          "je_target": 2577.6
+        },
+        {
+          "code": "barhadashi_gaunpalika_7",
+          "ward_no": 7,
+          "population": 3287,
+          "je_target": 1577.76
+        }
+      ]
+    },
+    {
+      "code": "birtamod_municipality",
+      "name": "Birtamod Municipality",
+      "population": 124473,
+      "je_target": 59747.04,
+      "ward_count": 10,
+      "wards": [
+        {
+          "code": "birtamod_municipality_1",
+          "ward_no": 1,
+          "population": 14715,
+          "je_target": 7063.2
+        },
+        {
+          "code": "birtamod_municipality_2",
+          "ward_no": 2,
+          "population": 14308,
+          "je_target": 6867.84
+        },
+        {
+          "code": "birtamod_municipality_3",
+          "ward_no": 3,
+          "population": 14218,
+          "je_target": 6824.64
+        },
+        {
+          "code": "birtamod_municipality_4",
+          "ward_no": 4,
+          "population": 17875,
+          "je_target": 8580.0
+        },
+        {
+          "code": "birtamod_municipality_5",
+          "ward_no": 5,
+          "population": 24323,
+          "je_target": 11675.04
+        },
+        {
+          "code": "birtamod_municipality_6",
+          "ward_no": 6,
+          "population": 9337,
+          "je_target": 4481.76
+        },
+        {
+          "code": "birtamod_municipality_7",
+          "ward_no": 7,
+          "population": 8819,
+          "je_target": 4233.12
+        },
+        {
+          "code": "birtamod_municipality_8",
+          "ward_no": 8,
+          "population": 6304,
+          "je_target": 3025.92
+        },
+        {
+          "code": "birtamod_municipality_9",
+          "ward_no": 9,
+          "population": 5891,
+          "je_target": 2827.68
+        },
+        {
+          "code": "birtamod_municipality_10",
+          "ward_no": 10,
+          "population": 8683,
+          "je_target": 4167.84
+        }
+      ]
+    },
+    {
+      "code": "haldibari_gaunpalika",
+      "name": "Haldibari Gaunpalika",
+      "population": 32724,
+      "je_target": 15707.52,
+      "ward_count": 5,
+      "wards": [
+        {
+          "code": "haldibari_gaunpalika_1",
+          "ward_no": 1,
+          "population": 8307,
+          "je_target": 3987.36
+        },
+        {
+          "code": "haldibari_gaunpalika_2",
+          "ward_no": 2,
+          "population": 9433,
+          "je_target": 4527.84
+        },
+        {
+          "code": "haldibari_gaunpalika_3",
+          "ward_no": 3,
+          "population": 5330,
+          "je_target": 2558.4
+        },
+        {
+          "code": "haldibari_gaunpalika_4",
+          "ward_no": 4,
+          "population": 5863,
+          "je_target": 2814.24
+        },
+        {
+          "code": "haldibari_gaunpalika_5",
+          "ward_no": 5,
+          "population": 3791,
+          "je_target": 1819.68
+        }
+      ]
+    },
+    {
+      "code": "bhadrapur_municipality",
+      "name": "Bhadrapur Municipality",
+      "population": 72250,
+      "je_target": 34680.0,
+      "ward_count": 10,
+      "wards": [
+        {
+          "code": "bhadrapur_municipality_1",
+          "ward_no": 1,
+          "population": 5960,
+          "je_target": 2860.8
+        },
+        {
+          "code": "bhadrapur_municipality_2",
+          "ward_no": 2,
+          "population": 7710,
+          "je_target": 3700.8
+        },
+        {
+          "code": "bhadrapur_municipality_3",
+          "ward_no": 3,
+          "population": 6812,
+          "je_target": 3269.76
+        },
+        {
+          "code": "bhadrapur_municipality_4",
+          "ward_no": 4,
+          "population": 7222,
+          "je_target": 3466.56
+        },
+        {
+          "code": "bhadrapur_municipality_5",
+          "ward_no": 5,
+          "population": 6980,
+          "je_target": 3350.4
+        },
+        {
+          "code": "bhadrapur_municipality_6",
+          "ward_no": 6,
+          "population": 7304,
+          "je_target": 3505.92
+        },
+        {
+          "code": "bhadrapur_municipality_7",
+          "ward_no": 7,
+          "population": 8314,
+          "je_target": 3990.72
+        },
+        {
+          "code": "bhadrapur_municipality_8",
+          "ward_no": 8,
+          "population": 5804,
+          "je_target": 2785.92
+        },
+        {
+          "code": "bhadrapur_municipality_9",
+          "ward_no": 9,
+          "population": 7913,
+          "je_target": 3798.24
+        },
+        {
+          "code": "bhadrapur_municipality_10",
+          "ward_no": 10,
+          "population": 8231,
+          "je_target": 3950.88
+        }
+      ]
+    },
+    {
+      "code": "kachanakawal_gaunpalika",
+      "name": "Kachanakawal Gaunpalika",
+      "population": 41055,
+      "je_target": 19706.4,
+      "ward_count": 7,
+      "wards": [
+        {
+          "code": "kachanakawal_gaunpalika_1",
+          "ward_no": 1,
+          "population": 7187,
+          "je_target": 3449.76
+        },
+        {
+          "code": "kachanakawal_gaunpalika_2",
+          "ward_no": 2,
+          "population": 3911,
+          "je_target": 1877.28
+        },
+        {
+          "code": "kachanakawal_gaunpalika_3",
+          "ward_no": 3,
+          "population": 6370,
+          "je_target": 3057.6
+        },
+        {
+          "code": "kachanakawal_gaunpalika_4",
+          "ward_no": 4,
+          "population": 6489,
+          "je_target": 3114.72
+        },
+        {
+          "code": "kachanakawal_gaunpalika_5",
+          "ward_no": 5,
+          "population": 4740,
+          "je_target": 2275.2
+        },
+        {
+          "code": "kachanakawal_gaunpalika_6",
+          "ward_no": 6,
+          "population": 6412,
+          "je_target": 3077.76
+        },
+        {
+          "code": "kachanakawal_gaunpalika_7",
+          "ward_no": 7,
+          "population": 5946,
+          "je_target": 2854.08
+        }
+      ]
+    }
+  ]
+}
