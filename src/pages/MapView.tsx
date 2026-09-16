@@ -238,7 +238,18 @@ export function MapView() {
             <Spinner />
           </div>
         )}
-        <div ref={containerRef} className="absolute inset-0" />
+        {/* maplibre-gl.css defines `.maplibregl-map { position: relative }`,
+            and maplibre-gl adds that exact class to whatever element it's
+            given as `container`. Bundled into the same stylesheet as
+            Tailwind, that rule has equal specificity to `.absolute` and can
+            win the cascade by source order, silently turning this div's
+            position back to relative and collapsing its height to 0 (no
+            content, no explicit height). Giving maplibre its own nested
+            plain div - sized with width/height instead of position - avoids
+            the collision entirely. */}
+        <div className="absolute inset-0">
+          <div ref={containerRef} className="w-full h-full" />
+        </div>
         <Legend lang={lang} t={t} />
       </div>
     </div>
