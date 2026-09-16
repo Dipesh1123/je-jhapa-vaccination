@@ -14,10 +14,22 @@ import { useLang, type Lang, type TranslationKey } from '../lib/i18n'
 import { ErrorBanner } from '../components/ErrorBanner'
 import { Spinner } from '../components/Spinner'
 
-// Computed from public/data/jhapa-palikas.geojson's own bounding box - see
-// scripts/build_palika_geojson.py.
-const JHAPA_CENTER: [number, number] = [87.9145, 26.5831]
-const JHAPA_ZOOM = 9.2
+// Jhapa district's exact bounding box, computed from
+// public/data/jhapa-palikas.geojson (scripts/build_palika_geojson.py).
+// [[west, south], [east, north]]
+const JHAPA_BOUNDS: [[number, number], [number, number]] = [
+  [87.6383, 26.3608],
+  [88.1906, 26.8055],
+]
+
+// A wider pad around the district so panning/zooming still shows a little
+// neighbouring context (rivers and roads don't stop at the border), without
+// letting the view wander off into the rest of Nepal or India - the ask
+// this responds to is "only Jhapa district, not others".
+const MAX_BOUNDS: [[number, number], [number, number]] = [
+  [87.45, 26.15],
+  [88.38, 27.0],
+]
 
 // Free, no-API-key basemap - keeps this at $0 like everything else here.
 const BASEMAP_STYLE = 'https://tiles.openfreemap.org/styles/bright'
@@ -67,8 +79,10 @@ export function MapView() {
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: BASEMAP_STYLE,
-      center: JHAPA_CENTER,
-      zoom: JHAPA_ZOOM,
+      bounds: JHAPA_BOUNDS,
+      fitBoundsOptions: { padding: 24 },
+      maxBounds: MAX_BOUNDS,
+      minZoom: 8,
     })
     map.addControl(new maplibregl.NavigationControl(), 'top-right')
     map.on('load', () => {
