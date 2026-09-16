@@ -57,6 +57,16 @@ const translations = {
   female: { en: 'Female', ne: 'महिला' },
   male: { en: 'Male', ne: 'पुरुष' },
 
+  // Duplicate review banner
+  duplicateReviewTitle: { en: 'Flagged for review — possible duplicate reports', ne: 'समीक्षाका लागि झण्डा — सम्भावित नक्कल प्रतिवेदन' },
+  duplicateReviewDesc: {
+    en: 'These facility-days have more than one submission with different numbers, after exact repeats were already removed automatically. Both submissions are currently included in every total below — check with the ward before treating either one as wrong.',
+    ne: 'यी संस्था-दिनहरूमा फरक फरक संख्या भएका एकभन्दा बढी प्रविष्टि छन्, ठ्याक्कै मिल्ने नक्कलहरू स्वतः हटाइसकेपछि पनि। दुवै प्रविष्टि हाल तलका सबै जम्मामा गणना भइरहेका छन् — कुनै एउटालाई गलत मान्नुअघि वडासँग यकिन गर्नुहोस्।',
+  },
+  colFacility: { en: 'Facility', ne: 'संस्था' },
+  colSubmissions: { en: 'Submissions', ne: 'प्रविष्टिहरू' },
+  colCombinedDoses: { en: 'Combined doses counted', ne: 'जम्मा गणना भएको मात्रा' },
+
   // Dashboard filter
   filterAll: { en: 'Overall (Jhapa district)', ne: 'समग्र (झापा जिल्ला)' },
   filterMunicipalityLabel: { en: 'Municipality / Rural municipality', ne: 'नगरपालिका / गाउँपालिका' },

@@ -69,6 +69,17 @@ export interface WardRow {
   coverage_pct: number
 }
 
+export interface DuplicateReviewRow {
+  ward_code: string
+  local_level_code: string
+  local_level_name: string
+  ward_no: number
+  report_date_ad: string
+  facility_name: string | null
+  submission_count: number
+  combined_doses: number
+}
+
 export interface DashboardData {
   scope: 'district' | 'local_level' | 'ward'
   code: string | null
@@ -79,6 +90,7 @@ export interface DashboardData {
   ageSex: AgeSexRow[]
   palikas: PalikaRow[] | null
   wards: WardRow[] | null
+  duplicates: DuplicateReviewRow[] | null
 }
 
 export interface FacilityPoint {

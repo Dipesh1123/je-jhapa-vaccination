@@ -91,20 +91,83 @@ PARTITION BY report_date_ad
 CLUSTER BY local_level_code, ward_code;
 
 -- --------------------------------------------------------------- deduplicated base
--- The webhook fires on create and may retry up to three times, and the daily
--- reconcile reloads everything KoBo holds. Both paths can therefore land the
--- same _uuid more than once. Every view below reads through this one, so a
--- duplicated delivery can never double-count a facility's doses.
+-- Two different duplication problems, collapsed in two passes.
+--
+-- 1. The same _uuid arriving more than once. The webhook fires on create and
+--    may retry up to three times, and the daily reconcile reloads everything
+--    KoBo holds, so one submission can land repeatedly.
+--
+-- 2. Different _uuids describing the same facility-day. Reports are daily
+--    increments and KoBoCollect syncs offline, so a reporter who isn't sure
+--    their submission went through fills the form again - a second, genuine
+--    submission with its own _uuid carrying the same day's count. Summing
+--    both inflates coverage, and because facility names are free text
+--    nothing else catches it.
+--
+--    Only an *exact* repeat is collapsed: same ward, same date, same facility
+--    name (normalised for case/spacing/punctuation, since it is typed by
+--    hand) AND an identical age x sex tally. Two real sessions producing four
+--    byte-identical numbers is not a realistic reading, whereas a
+--    resubmission produces exactly that. Anything matching on ward, date and
+--    facility but differing in the numbers is deliberately left alone and
+--    surfaced by v_duplicate_review instead - it may be a correction or a
+--    second session, and silently discarding a real facility's doses is worse
+--    than giving the office something to check.
+--
+-- Every view below reads through this one.
 
 CREATE OR REPLACE VIEW je_jhapa.v_reports AS
-SELECT * EXCEPT (row_num)
+WITH by_uuid AS (
+  SELECT * EXCEPT (row_num)
+  FROM (
+    SELECT
+      *,
+      ROW_NUMBER() OVER (PARTITION BY submission_uuid ORDER BY ingested_at DESC) AS row_num
+    FROM je_jhapa.reports
+  )
+  WHERE row_num = 1
+),
+named AS (
+  SELECT
+    *,
+    -- "Birtamod HP", "birtamod h.p." and "BIRTAMOD  HP" are one facility.
+    LOWER(REGEXP_REPLACE(COALESCE(facility_name, ''), r'[^\p{L}\p{N}]', '')) AS facility_name_norm
+  FROM by_uuid
+)
+SELECT * EXCEPT (dup_num)
 FROM (
   SELECT
     *,
-    ROW_NUMBER() OVER (PARTITION BY submission_uuid ORDER BY ingested_at DESC) AS row_num
-  FROM je_jhapa.reports
+    ROW_NUMBER() OVER (
+      PARTITION BY
+        ward_code, report_date_ad, facility_name_norm,
+        v_30_60_f, v_30_60_m, v_60plus_f, v_60plus_m
+      ORDER BY submitted_at, ingested_at
+    ) AS dup_num
+  FROM named
 )
-WHERE row_num = 1;
+WHERE dup_num = 1;
+
+-- -------------------------------------------------------- duplicate review queue
+-- Facility-days that still have more than one submission after the exact-repeat
+-- collapse above: same ward, same date, same facility, but different numbers.
+-- These are all currently being summed into the totals, so this is a list for
+-- the office to eyeball - not something to resolve silently in SQL.
+
+CREATE OR REPLACE VIEW je_jhapa.v_duplicate_review AS
+SELECT
+  r.ward_code,
+  r.local_level_code,
+  ll.name                   AS local_level_name,
+  r.ward_no,
+  r.report_date_ad,
+  ANY_VALUE(r.facility_name) AS facility_name,
+  COUNT(*)                  AS submission_count,
+  SUM(r.total_doses)        AS combined_doses
+FROM je_jhapa.v_reports r
+JOIN je_jhapa.ref_local_level ll ON ll.code = r.local_level_code
+GROUP BY r.ward_code, r.local_level_code, ll.name, r.ward_no, r.report_date_ad, r.facility_name_norm
+HAVING COUNT(*) > 1;
 
 -- ------------------------------------------------------------------ ward roll-up
 -- LEFT JOIN from ref_ward so all 131 wards appear from day one, including those

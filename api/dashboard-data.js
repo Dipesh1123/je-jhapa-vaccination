@@ -14,7 +14,7 @@ import { CAMPAIGN_START, CAMPAIGN_END } from "./_lib/campaign.js";
 import { flattenRow } from "./_lib/csv.js";
 
 async function districtScope(bq) {
-  const [[districtTarget], daily, ageSex, palikas] = await Promise.all([
+  const [[districtTarget], daily, ageSex, palikas, duplicates] = await Promise.all([
     bq.query({
       query: `SELECT SUM(je_target) AS je_target, SUM(population) AS population
               FROM \`${DATASET}.ref_local_level\``,
@@ -30,6 +30,10 @@ async function districtScope(bq) {
     }).then(([rows]) => rows),
     bq.query({
       query: `SELECT * FROM \`${DATASET}.v_local_level_cumulative\` ORDER BY local_level_name`,
+      location: LOCATION,
+    }).then(([rows]) => rows),
+    bq.query({
+      query: `SELECT * FROM \`${DATASET}.v_duplicate_review\` ORDER BY report_date_ad DESC, local_level_name, ward_no`,
       location: LOCATION,
     }).then(([rows]) => rows),
   ]);
@@ -54,6 +58,7 @@ async function districtScope(bq) {
     ageSex: ageSex.map(flattenRow),
     palikas: palikas.map(flattenRow),
     wards: null,
+    duplicates: duplicates.map(flattenRow),
   };
 }
 
@@ -143,6 +148,7 @@ async function narrowScope(bq, scope, code) {
     ageSex,
     palikas: null,
     wards: wards ? wards.map(flattenRow) : null,
+    duplicates: null,
   };
 }
 
