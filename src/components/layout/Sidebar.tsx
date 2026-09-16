@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Map, Package, Download, Syringe, X } from 'lucide-react'
+import { LayoutDashboard, Map, Package, Download, X } from 'lucide-react'
 import { cn } from '../../lib/utils'
 
 interface SidebarProps {
@@ -15,17 +15,11 @@ const links = [
 
 export function Sidebar({ onClose }: SidebarProps) {
   return (
-    <aside className="w-64 md:w-60 bg-white border-r border-slate-200 flex flex-col h-full min-h-screen overflow-y-auto">
-      <div className="flex items-center justify-between px-4 py-5 border-b border-slate-100">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
-            <Syringe size={20} />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-blue-700 leading-tight">जे.ई. खोप अभियान</p>
-            <p className="text-xs text-slate-500 leading-tight">स्वास्थ्य कार्यालय, झापा</p>
-          </div>
-        </div>
+    <aside className="w-64 md:w-60 bg-white border-r border-slate-200 flex flex-col h-full overflow-y-auto">
+      <div className="flex items-center justify-between px-4 py-4 border-b border-slate-100">
+        <p className="text-xs font-semibold text-govt-navy leading-tight tracking-wide uppercase">
+          मुख्य मेनु
+        </p>
         {onClose && (
           <button
             onClick={onClose}
@@ -48,7 +42,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
                 isActive
-                  ? 'bg-blue-50 text-blue-700'
+                  ? 'bg-blue-50 text-govt-navy'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               )
             }
