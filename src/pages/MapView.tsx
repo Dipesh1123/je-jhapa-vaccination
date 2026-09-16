@@ -101,11 +101,12 @@ export function MapView() {
     }
   }, [])
 
-  // District mask - dims everything outside Jhapa (a world rectangle with
-  // the district's own outline cut out as a hole, see
-  // scripts/build_jhapa_mask.py) so neighbouring districts read as context,
-  // not as part of the data. Independent of `data`/facility state, so it
-  // appears immediately once the map itself is ready.
+  // District mask - hides everything outside Jhapa completely (a world
+  // rectangle with the district's own outline cut out as a hole, see
+  // scripts/build_jhapa_mask.py). Fully opaque: only Jhapa itself is
+  // visible, nothing from neighbouring districts shows through. Independent
+  // of `data`/facility state, so it appears immediately once the map itself
+  // is ready.
   useEffect(() => {
     const map = mapRef.current
     if (!map || !mapReady) return
@@ -119,7 +120,7 @@ export function MapView() {
           id: 'jhapa-mask-fill',
           type: 'fill',
           source: 'jhapa-mask',
-          paint: { 'fill-color': '#f8fafc', 'fill-opacity': 0.82 },
+          paint: { 'fill-color': '#f8fafc', 'fill-opacity': 1 },
         })
       })
       .catch((e) => setError(String(e)))
