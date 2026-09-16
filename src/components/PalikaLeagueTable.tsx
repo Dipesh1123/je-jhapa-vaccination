@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { ArrowUpDown } from 'lucide-react'
 import type { PalikaRow } from '../lib/api'
 import { sequentialBlue } from '../lib/palette'
-import { toNepaliNumeral } from '../lib/nepali'
+import { formatNumeral } from '../lib/nepali'
+import { useLang, type TranslationKey } from '../lib/i18n'
 
 interface Props {
   palikas: PalikaRow[]
@@ -16,6 +17,8 @@ type SortKey = 'coverage_pct' | 'total_doses' | 'population' | 'local_level_name
 const BAR_COLOR = sequentialBlue[450]
 
 export function PalikaLeagueTable({ palikas }: Props) {
+  const { lang, t } = useLang()
+  const n = (v: number | string) => formatNumeral(v, lang)
   const [sortKey, setSortKey] = useState<SortKey>('coverage_pct')
   const [desc, setDesc] = useState(true)
 
@@ -31,17 +34,17 @@ export function PalikaLeagueTable({ palikas }: Props) {
     else { setSortKey(key); setDesc(true) }
   }
 
-  const headers: { key: SortKey; label: string }[] = [
-    { key: 'local_level_name', label: 'स्थानीय तह' },
-    { key: 'population', label: 'जनसंख्या' },
-    { key: 'total_doses', label: 'खोप लगाइएको' },
-    { key: 'coverage_pct', label: 'प्रगति' },
+  const headers: { key: SortKey; labelKey: TranslationKey }[] = [
+    { key: 'local_level_name', labelKey: 'colLocalLevel' },
+    { key: 'population', labelKey: 'colPopulation' },
+    { key: 'total_doses', labelKey: 'colVaccinated' },
+    { key: 'coverage_pct', labelKey: 'colProgress' },
   ]
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
       <h3 className="text-sm font-semibold text-slate-700 px-4 pt-4 pb-2">
-        स्थानीय तह अनुसार प्रगति
+        {t('progressByLocalLevel')}
       </h3>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
@@ -54,7 +57,7 @@ export function PalikaLeagueTable({ palikas }: Props) {
                   className="text-left px-4 py-2 text-xs font-medium text-slate-500 cursor-pointer select-none hover:text-slate-700 whitespace-nowrap"
                 >
                   <span className="inline-flex items-center gap-1">
-                    {h.label}
+                    {t(h.labelKey)}
                     <ArrowUpDown size={12} className={sortKey === h.key ? 'text-blue-600' : 'text-slate-300'} />
                   </span>
                 </th>
@@ -70,14 +73,14 @@ export function PalikaLeagueTable({ palikas }: Props) {
                     {p.local_level_name}
                   </Link>
                   <span className="text-xs text-slate-400 block">
-                    {toNepaliNumeral(p.wards_reporting)}/{toNepaliNumeral(p.ward_count)} वडा प्रतिवेदित
+                    {t('wardsReported', { a: n(p.wards_reporting), b: n(p.ward_count) })}
                   </span>
                 </td>
                 <td className="px-4 py-2.5 text-slate-600" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                  {toNepaliNumeral(p.population.toLocaleString())}
+                  {n(p.population.toLocaleString())}
                 </td>
                 <td className="px-4 py-2.5 text-slate-600" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                  {toNepaliNumeral(p.total_doses.toLocaleString())}
+                  {n(p.total_doses.toLocaleString())}
                 </td>
                 <td className="px-4 py-2.5">
                   <div className="flex items-center gap-2">
@@ -91,7 +94,7 @@ export function PalikaLeagueTable({ palikas }: Props) {
                       />
                     </div>
                     <span className="text-xs font-medium text-slate-700 tabular-nums w-12 text-right">
-                      {toNepaliNumeral(p.coverage_pct.toFixed(1))}%
+                      {n(p.coverage_pct.toFixed(1))}%
                     </span>
                   </div>
                 </td>

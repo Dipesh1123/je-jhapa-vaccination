@@ -3,7 +3,8 @@ import {
 } from 'recharts'
 import type { DailyRow } from '../../lib/api'
 import { trendSeries, ink } from '../../lib/palette'
-import { formatBsDate, toNepaliNumeral } from '../../lib/nepali'
+import { formatDate, formatNumeral } from '../../lib/nepali'
+import { useLang } from '../../lib/i18n'
 
 interface Props {
   daily: DailyRow[]
@@ -45,24 +46,27 @@ function buildSeries(daily: DailyRow[], start: string, end: string): Point[] {
 }
 
 export function CoverageTrendChart({ daily, campaignStart, campaignEnd }: Props) {
+  const { lang, t } = useLang()
+  const n = (v: number | string) => formatNumeral(v, lang)
   const data = buildSeries(daily, campaignStart, campaignEnd)
+  const seriesLabel = (name: string) => (name === 'actual' ? t('seriesActual') : t('seriesPace'))
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <h3 className="text-sm font-semibold text-slate-700 mb-3">दिनअनुसार सञ्चयी प्रगति (%)</h3>
+      <h3 className="text-sm font-semibold text-slate-700 mb-3">{t('coverageTrendTitle')}</h3>
       <ResponsiveContainer width="100%" height={280}>
         <LineChart data={data} margin={{ top: 8, right: 16, left: -8, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={ink.light.gridline} vertical={false} />
           <XAxis
             dataKey="dayIndex"
-            tickFormatter={(v: number) => toNepaliNumeral(v)}
+            tickFormatter={(v: number) => n(v)}
             stroke={ink.light.muted}
             fontSize={12}
             tickLine={false}
           />
           <YAxis
             domain={[0, 100]}
-            tickFormatter={(v: number) => `${toNepaliNumeral(v)}%`}
+            tickFormatter={(v: number) => `${n(v)}%`}
             stroke={ink.light.muted}
             fontSize={12}
             tickLine={false}
@@ -70,19 +74,15 @@ export function CoverageTrendChart({ daily, campaignStart, campaignEnd }: Props)
           />
           <Tooltip
             formatter={(value: number, name: string) => [
-              `${toNepaliNumeral(Math.round(value * 10) / 10)}%`,
-              name === 'actual' ? trendSeries.actual.labelNe : trendSeries.pace.labelNe,
+              `${n(Math.round(value * 10) / 10)}%`,
+              seriesLabel(name),
             ]}
             labelFormatter={(dayIndex: number) => {
               const p = data[dayIndex - 1]
-              return p ? formatBsDate(p.date) : ''
+              return p ? formatDate(p.date, lang) : ''
             }}
           />
-          <Legend
-            formatter={(value: string) =>
-              value === 'actual' ? trendSeries.actual.labelNe : trendSeries.pace.labelNe
-            }
-          />
+          <Legend formatter={(value: string) => seriesLabel(value)} />
           <Line
             type="monotone"
             dataKey="pace"

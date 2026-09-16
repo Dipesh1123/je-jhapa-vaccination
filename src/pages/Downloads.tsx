@@ -1,12 +1,15 @@
 import { FileSpreadsheet, FileText, Clock } from 'lucide-react'
+import { useLang } from '../lib/i18n'
 
 export function Downloads() {
+  const { t } = useLang()
+
   return (
     <div className="p-4 md:p-6 space-y-4 max-w-2xl mx-auto">
       <div>
-        <h1 className="text-lg font-semibold text-slate-800">डाउनलोड</h1>
+        <h1 className="text-lg font-semibold text-slate-800">{t('downloadsTitle')}</h1>
         <p className="text-sm text-slate-500 mt-0.5">
-          सबै डाटा सार्वजनिक छ — कुनै लगइन आवश्यक पर्दैन
+          {t('downloadsSubtitle')}
         </p>
       </div>
 
@@ -18,9 +21,9 @@ export function Downloads() {
           <FileSpreadsheet size={20} />
         </div>
         <div>
-          <p className="text-sm font-medium text-slate-800">वडागत सारांश (CSV)</p>
+          <p className="text-sm font-medium text-slate-800">{t('wardAggregateTitle')}</p>
           <p className="text-xs text-slate-500 mt-0.5">
-            १३१ वडाको जनसंख्या, लक्ष्य, खोप संख्या र प्रगति % — एक पंक्ति प्रति वडा
+            {t('wardAggregateDesc')}
           </p>
         </div>
       </a>
@@ -33,9 +36,9 @@ export function Downloads() {
           <FileText size={20} />
         </div>
         <div>
-          <p className="text-sm font-medium text-slate-800">पूर्ण प्रतिवेदन विवरण (CSV)</p>
+          <p className="text-sm font-medium text-slate-800">{t('fullDetailTitle')}</p>
           <p className="text-xs text-slate-500 mt-0.5">
-            हरेक संस्था, हरेक दिनको प्रतिवेदन — उमेर/लिङ्ग, सामग्री, र AEFI सहित
+            {t('fullDetailDesc')}
           </p>
         </div>
       </a>
@@ -45,9 +48,9 @@ export function Downloads() {
           <Clock size={20} />
         </div>
         <div>
-          <p className="text-sm font-medium text-slate-500">JE-083_84.xlsx ढाँचामा डाउनलोड</p>
+          <p className="text-sm font-medium text-slate-500">{t('excelMirrorTitle')}</p>
           <p className="text-xs text-slate-400 mt-0.5">
-            निर्माणाधीन — हाल स्वास्थ्य कार्यालयले प्रयोग गर्ने ठ्याक्कै उही ढाँचामा एक्सेल तयार हुनेछ
+            {t('excelMirrorDesc')}
           </p>
         </div>
       </div>

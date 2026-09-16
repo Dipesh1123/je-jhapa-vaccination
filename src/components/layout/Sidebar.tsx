@@ -1,24 +1,27 @@
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, Map, Package, Download, X } from 'lucide-react'
 import { cn } from '../../lib/utils'
+import { useLang, type TranslationKey } from '../../lib/i18n'
 
 interface SidebarProps {
   onClose?: () => void
 }
 
-const links = [
-  { to: '/', icon: LayoutDashboard, label: 'ड्यासबोर्ड', end: true },
-  { to: '/map', icon: Map, label: 'नक्सा' },
-  { to: '/commodity', icon: Package, label: 'सामग्री मौज्दात' },
-  { to: '/downloads', icon: Download, label: 'डाउनलोड' },
+const links: { to: string; icon: typeof LayoutDashboard; labelKey: TranslationKey; end?: boolean }[] = [
+  { to: '/', icon: LayoutDashboard, labelKey: 'navDashboard', end: true },
+  { to: '/map', icon: Map, labelKey: 'navMap' },
+  { to: '/commodity', icon: Package, labelKey: 'navCommodity' },
+  { to: '/downloads', icon: Download, labelKey: 'navDownloads' },
 ]
 
 export function Sidebar({ onClose }: SidebarProps) {
+  const { t } = useLang()
+
   return (
     <aside className="w-64 md:w-60 bg-white border-r border-slate-200 flex flex-col h-full overflow-y-auto">
       <div className="flex items-center justify-between px-4 py-4 border-b border-slate-100">
         <p className="text-xs font-semibold text-govt-navy leading-tight tracking-wide uppercase">
-          मुख्य मेनु
+          {t('mainMenu')}
         </p>
         {onClose && (
           <button
@@ -32,7 +35,7 @@ export function Sidebar({ onClose }: SidebarProps) {
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1">
-        {links.map(({ to, icon: Icon, label, end }) => (
+        {links.map(({ to, icon: Icon, labelKey, end }) => (
           <NavLink
             key={to}
             to={to}
@@ -48,14 +51,14 @@ export function Sidebar({ onClose }: SidebarProps) {
             }
           >
             <Icon size={18} />
-            {label}
+            {t(labelKey)}
           </NavLink>
         ))}
       </nav>
 
       <div className="px-4 py-4 border-t border-slate-100">
         <p className="text-xs text-slate-400 leading-relaxed">
-          आ.व. २०८३/८४ · सार्वजनिक डेटा
+          {t('publicData')}
         </p>
       </div>
     </aside>

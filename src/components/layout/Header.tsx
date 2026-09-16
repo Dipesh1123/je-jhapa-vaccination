@@ -1,5 +1,6 @@
 import { Menu } from 'lucide-react'
-import { formatBsDate } from '../../lib/nepali'
+import { formatDate } from '../../lib/nepali'
+import { useLang } from '../../lib/i18n'
 
 interface HeaderProps {
   onMenuClick?: () => void
@@ -10,6 +11,7 @@ interface HeaderProps {
 // Surveillance): a thin flag strip, a dark utility bar with date/FY, and a
 // white brand bar with the government emblem, ministry hierarchy and title.
 export function Header({ onMenuClick }: HeaderProps) {
+  const { lang, setLang, t } = useLang()
   const today = new Date().toISOString().slice(0, 10)
 
   return (
@@ -17,8 +19,11 @@ export function Header({ onMenuClick }: HeaderProps) {
       <div className="h-[5px] bg-govt-crimson" />
 
       <div className="bg-govt-navy-dark text-blue-100/80 text-[11px] md:text-xs px-4 md:px-6 py-1.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5">
-        <span>{formatBsDate(today)} · आ.व. २०८३/८४</span>
-        <span className="hidden sm:inline">५–१९ असोज २०८३ अभियान · सार्वजनिक ड्यासबोर्ड</span>
+        <span>{formatDate(today, lang)} · {t('fiscalYear')}</span>
+        <div className="flex items-center gap-3">
+          <span className="hidden sm:inline">{t('campaignWindow')}</span>
+          <LangToggle lang={lang} setLang={setLang} />
+        </div>
       </div>
 
       <div className="bg-white border-b-[3px] border-govt-gold px-4 md:px-6 py-3 flex items-center gap-3 md:gap-4">
@@ -33,21 +38,42 @@ export function Header({ onMenuClick }: HeaderProps) {
         )}
         <img
           src="/logo.png"
-          alt="नेपाल सरकारको निशान"
+          alt="Emblem of Nepal"
           className="h-11 w-11 md:h-14 md:w-14 object-contain shrink-0"
         />
         <div className="min-w-0">
           <p className="text-[11px] md:text-xs font-semibold text-govt-maroon leading-tight truncate">
-            नेपाल सरकार · कोशी प्रदेश सरकार, स्वास्थ्य मन्त्रालय
+            {t('govtLine')}
           </p>
           <h1 className="text-sm md:text-xl font-bold text-govt-navy leading-tight truncate">
-            स्वास्थ्य कार्यालय, झापा — जे.ई. खोप अभियान प्रगति
+            {t('officeTitle')}
           </h1>
           <p className="text-[11px] md:text-xs text-slate-500 leading-tight truncate">
-            जापानिज इन्सेफ्लाइटिस खोप अभियान ड्यासबोर्ड · आ.व. २०८३/८४
+            {t('campaignSubtitle')} · {t('fiscalYear')}
           </p>
         </div>
       </div>
     </header>
+  )
+}
+
+function LangToggle({ lang, setLang }: { lang: 'en' | 'ne'; setLang: (l: 'en' | 'ne') => void }) {
+  return (
+    <div className="flex items-center rounded-full bg-white/10 p-0.5 text-[10px] font-semibold shrink-0" role="group" aria-label="Language">
+      <button
+        onClick={() => setLang('en')}
+        className={`px-2 py-0.5 rounded-full transition-colors ${lang === 'en' ? 'bg-white text-govt-navy-dark' : 'text-blue-100/80 hover:text-white'}`}
+        aria-pressed={lang === 'en'}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => setLang('ne')}
+        className={`px-2 py-0.5 rounded-full transition-colors ${lang === 'ne' ? 'bg-white text-govt-navy-dark' : 'text-blue-100/80 hover:text-white'}`}
+        aria-pressed={lang === 'ne'}
+      >
+        ने
+      </button>
+    </div>
   )
 }

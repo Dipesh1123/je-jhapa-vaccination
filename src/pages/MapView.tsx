@@ -9,7 +9,8 @@ import { Table } from 'lucide-react'
 import { api, type MapData, type PalikaRow } from '../lib/api'
 import { coverageFillExpression } from '../lib/geo'
 import { sequentialBlue } from '../lib/palette'
-import { toNepaliNumeral } from '../lib/nepali'
+import { formatNumeral } from '../lib/nepali'
+import { useLang, type Lang, type TranslationKey } from '../lib/i18n'
 import { ErrorBanner } from '../components/ErrorBanner'
 import { Spinner } from '../components/Spinner'
 
@@ -32,6 +33,15 @@ maplibregl.setWorkerUrl('/maplibre-gl-worker.mjs')
 type Layer = 'palika' | 'ward'
 
 export function MapView() {
+  const { lang, t } = useLang()
+  // The mousemove/hover handlers below are attached once, inside an effect
+  // that only re-runs when the map data changes - not on every render - so
+  // a closure capturing `t`/`lang` directly would freeze at whatever
+  // language was active on first load. A ref always reads the current
+  // translator at hover time instead.
+  const i18nRef = useRef({ lang, t })
+  useEffect(() => { i18nRef.current = { lang, t } }, [lang, t])
+
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MlMap | null>(null)
   const popupRef = useRef<Popup | null>(null)
@@ -114,13 +124,14 @@ export function MapView() {
             const f = e.features?.[0]
             if (!f || !popupRef.current) return
             const p = f.properties as { name: string; coverage_pct: number; total_doses: number }
+            const { lang: l, t: tr } = i18nRef.current
             popupRef.current
               .setLngLat(e.lngLat)
               .setHTML(
                 `<div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:13px">
                    <strong>${p.name}</strong><br/>
-                   प्रगति: ${p.coverage_pct.toFixed(1)}%<br/>
-                   खोप लगाइएको: ${Math.round(p.total_doses).toLocaleString()}
+                   ${tr('popupProgress')}: ${formatNumeral(p.coverage_pct.toFixed(1), l)}%<br/>
+                   ${tr('popupVaccinated')}: ${formatNumeral(Math.round(p.total_doses).toLocaleString(), l)}
                  </div>`
               )
               .addTo(map)
@@ -144,7 +155,7 @@ export function MapView() {
       features: data.facilities.map((f) => ({
         type: 'Feature',
         geometry: { type: 'Point', coordinates: [f.facility_lon, f.facility_lat] },
-        properties: { name: f.facility_name ?? 'नामविहीन संस्था', doses: f.total_doses },
+        properties: { name: f.facility_name || null, doses: f.total_doses },
       })),
     }
 
@@ -167,10 +178,11 @@ export function MapView() {
         map.getCanvas().style.cursor = 'pointer'
         const f = e.features?.[0]
         if (!f || !popupRef.current) return
-        const p = f.properties as { name: string; doses: number }
+        const p = f.properties as { name: string | null; doses: number }
+        const { lang: l, t: tr } = i18nRef.current
         popupRef.current
           .setLngLat(e.lngLat)
-          .setHTML(`<div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:13px"><strong>${p.name}</strong><br/>खोप: ${p.doses}</div>`)
+          .setHTML(`<div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:13px"><strong>${p.name || tr('unnamedFacility')}</strong><br/>${tr('popupDoses')}: ${formatNumeral(p.doses, l)}</div>`)
           .addTo(map)
       })
       map.on('mouseleave', 'facilities-point', () => {
@@ -186,9 +198,9 @@ export function MapView() {
     <div className="h-full flex flex-col">
       <div className="p-4 md:p-6 pb-2 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg font-semibold text-slate-800">नक्सा</h1>
+          <h1 className="text-lg font-semibold text-slate-800">{t('mapTitle')}</h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            प्रगति % अनुसार स्थानीय तहको नक्सा र संस्था स्थानहरू
+            {t('mapSubtitle')}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -197,26 +209,26 @@ export function MapView() {
               onClick={() => setLayer('palika')}
               className={`px-3 py-1.5 text-sm rounded-md ${layer === 'palika' ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-500'}`}
             >
-              स्थानीय तह
+              {t('layerLocalLevel')}
             </button>
             <button
               onClick={() => wardGeoAvailable && setLayer('ward')}
               disabled={!wardGeoAvailable}
-              title={wardGeoAvailable === false ? 'वडा सीमाना डेटा अझै उपलब्ध छैन' : undefined}
+              title={wardGeoAvailable === false ? t('wardGeoUnavailable') : undefined}
               className={`px-3 py-1.5 text-sm rounded-md ${layer === 'ward' ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-500'} ${!wardGeoAvailable ? 'opacity-40 cursor-not-allowed' : ''}`}
             >
-              वडा
+              {t('layerWard')}
             </button>
           </div>
           <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-blue-700 hover:underline">
-            <Table size={15} /> तालिका रूपमा हेर्नुहोस्
+            <Table size={15} /> {t('viewAsTable')}
           </Link>
         </div>
       </div>
 
       {!wardGeoAvailable && layer === 'ward' && (
         <div className="mx-4 md:mx-6 mb-2">
-          <WardFallbackTable palikas={data?.palikas ?? []} />
+          <WardFallbackTable palikas={data?.palikas ?? []} lang={lang} t={t} />
         </div>
       )}
 
@@ -227,28 +239,28 @@ export function MapView() {
           </div>
         )}
         <div ref={containerRef} className="absolute inset-0" />
-        <Legend />
+        <Legend lang={lang} t={t} />
       </div>
     </div>
   )
 }
 
-function Legend() {
+function Legend({ lang, t }: { lang: Lang; t: (key: TranslationKey) => string }) {
   const steps: [number, string][] = [
     [0, sequentialBlue[100]], [20, sequentialBlue[250]], [40, sequentialBlue[350]],
     [60, sequentialBlue[450]], [80, sequentialBlue[550]], [100, sequentialBlue[700]],
   ]
   return (
     <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-lg border border-slate-200 px-3 py-2 shadow-sm">
-      <p className="text-xs font-medium text-slate-600 mb-1.5">प्रगति %</p>
+      <p className="text-xs font-medium text-slate-600 mb-1.5">{t('legendProgress')}</p>
       <div className="flex items-center gap-0.5">
         {steps.map(([pct, color]) => (
           <div key={pct} className="w-6 h-3" style={{ backgroundColor: color }} title={`${pct}%`} />
         ))}
       </div>
       <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
-        <span>{toNepaliNumeral(0)}%</span>
-        <span>{toNepaliNumeral(100)}%</span>
+        <span>{formatNumeral(0, lang)}%</span>
+        <span>{formatNumeral(100, lang)}%</span>
       </div>
     </div>
   )
@@ -256,15 +268,14 @@ function Legend() {
 
 // Ward geometry is a documented gap (plan risk #2) - a sortable heat-table
 // stands in for the choropleth until official ward boundaries are available.
-function WardFallbackTable({ palikas }: { palikas: PalikaRow[] }) {
+function WardFallbackTable({ palikas, lang, t }: { palikas: PalikaRow[]; lang: Lang; t: (key: TranslationKey, vars?: Record<string, string | number>) => string }) {
   return (
     <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800">
-      वडा सीमानाको आधिकारिक डेटा अझै प्राप्त भएको छैन। तल स्थानीय तह अनुसार प्रगति हेर्नुहोस्, वा प्रत्येक
-      स्थानीय तहको वडागत तालिकाका लागि{' '}
-      <Link to="/" className="underline font-medium">ड्यासबोर्डको तालिका</Link> हेर्नुहोस्।
+      {t('wardFallbackMsg')}
+      <Link to="/" className="underline font-medium">{t('wardFallbackLink')}</Link>
       {palikas.length > 0 && (
         <span className="block mt-1 text-amber-700">
-          ({toNepaliNumeral(palikas.length)} स्थानीय तह उपलब्ध)
+          {t('wardFallbackCount', { n: formatNumeral(palikas.length, lang) })}
         </span>
       )}
     </div>

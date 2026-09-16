@@ -3,11 +3,18 @@
 // on how a Nepali date looks.
 
 import NepaliDate from 'nepali-date-converter'
+import type { Lang } from './i18n'
 
 const NP_DIGITS = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९']
 
 export function toNepaliNumeral(n: number | string): string {
   return String(n).replace(/\d/g, d => NP_DIGITS[+d])
+}
+
+/** Devanagari numerals in Nepali, plain Arabic numerals in English - the one
+ *  place every KPI/table/chart number in the app goes through. */
+export function formatNumeral(n: number | string, lang: Lang): string {
+  return lang === 'ne' ? toNepaliNumeral(n) : String(n)
 }
 
 export const NEPALI_MONTHS = [
@@ -26,6 +33,17 @@ export function formatBsDate(adDateStr: string | null | undefined): string {
     const month = NEPALI_MONTHS[nd.getMonth()]
     const year = toNepaliNumeral(nd.getYear())
     return `${day} ${month} ${year}`
+  } catch {
+    return '—'
+  }
+}
+
+/** BS date in Nepali, short AD date ("5 Oct 2026") in English. */
+export function formatDate(adDateStr: string | null | undefined, lang: Lang): string {
+  if (!adDateStr) return '—'
+  if (lang === 'ne') return formatBsDate(adDateStr)
+  try {
+    return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(adDateStr))
   } catch {
     return '—'
   }
