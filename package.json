@@ -11,7 +11,8 @@
     "dev": "vercel dev",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "node -e \"const fs=require('fs'); for (const f of ['maplibre-gl-worker.mjs','maplibre-gl-shared.mjs']) fs.copyFileSync('node_modules/maplibre-gl/dist/'+f, 'public/'+f)\""
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.9.1",

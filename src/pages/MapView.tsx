@@ -21,6 +21,14 @@ const JHAPA_ZOOM = 9.2
 // Free, no-API-key basemap - keeps this at $0 like everything else here.
 const BASEMAP_STYLE = 'https://tiles.openfreemap.org/styles/bright'
 
+// maplibre-gl resolves its worker script relative to its own bundled
+// chunk's import.meta.url at runtime, which Vite can't statically pick up
+// as a build asset - the request 404s, and the SPA catch-all rewrite
+// masks that 404 by serving index.html, which then fails as invalid JS.
+// Point it at the copy of maplibre-gl-worker.mjs checked into public/
+// instead (see package.json's postinstall / the file's own header).
+maplibregl.setWorkerUrl('/maplibre-gl-worker.mjs')
+
 type Layer = 'palika' | 'ward'
 
 export function MapView() {
@@ -53,7 +61,14 @@ export function MapView() {
       zoom: JHAPA_ZOOM,
     })
     map.addControl(new maplibregl.NavigationControl(), 'top-right')
-    map.on('load', () => setMapReady(true))
+    map.on('load', () => {
+      // Defensive: the container sits inside several flex/percentage
+      // ancestors (masthead + sidebar layout). A resize once the style is
+      // actually ready is cheap insurance against maplibre-gl having
+      // latched onto a size from an earlier layout pass.
+      map.resize()
+      setMapReady(true)
+    })
     mapRef.current = map
     popupRef.current = new maplibregl.Popup({ closeButton: false, closeOnClick: false })
     return () => {
@@ -168,7 +183,7 @@ export function MapView() {
   if (error) return <div className="p-6"><ErrorBanner message={error} /></div>
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-full flex flex-col">
       <div className="p-4 md:p-6 pb-2 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-semibold text-slate-800">नक्सा</h1>
