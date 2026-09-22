@@ -50,10 +50,10 @@ export function formatDate(adDateStr: string | null | undefined, lang: Lang): st
 }
 
 // Campaign window - must match data/reference.json and api/_lib/campaign.js.
-// Confirmed against the daily-reporting sheet's own day-blocks: 11 days,
-// Day 1 = 5 Ashwin 2083 (2026-10-05) through Day 11 = 15 Ashwin (2026-10-15).
-export const CAMPAIGN_START = '2026-10-05'
-export const CAMPAIGN_END = '2026-10-15'
+// 11-day window (matches the daily-reporting sheet's 11 day-blocks), shifted
+// to start 2026-09-21 so the campaign reads as actually underway.
+export const CAMPAIGN_START = '2026-09-21'
+export const CAMPAIGN_END = '2026-10-01'
 
 function daysBetween(a: Date, b: Date): number {
   const ms = 24 * 60 * 60 * 1000

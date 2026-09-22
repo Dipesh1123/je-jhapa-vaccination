@@ -23,7 +23,7 @@ const translations = {
   officeTitle: { en: 'Health Office, Jhapa — JE Vaccination Campaign Progress', ne: 'स्वास्थ्य कार्यालय, झापा — जे.ई. खोप अभियान प्रगति' },
   campaignSubtitle: { en: 'Japanese Encephalitis Vaccination Campaign Dashboard', ne: 'जापानिज इन्सेफ्लाइटिस खोप अभियान ड्यासबोर्ड' },
   fiscalYear: { en: 'FY 2083/84', ne: 'आ.व. २०८३/८४' },
-  campaignWindow: { en: '5–15 Oct 2026 campaign · Public dashboard', ne: '५–१५ असोज २०८३ अभियान · सार्वजनिक ड्यासबोर्ड' },
+  campaignWindow: { en: '21 Sep – 1 Oct 2026 campaign · Public dashboard', ne: '५–१५ आश्विन २०८३ अभियान · सार्वजनिक ड्यासबोर्ड' },
   publicData: { en: 'FY 2083/84 · Public data', ne: 'आ.व. २०८३/८४ · सार्वजनिक डेटा' },
 
   // Sidebar nav
@@ -43,7 +43,6 @@ const translations = {
   paceAhead: { en: 'Ahead of target pace', ne: 'निर्धारित लक्ष्यभन्दा अगाडि' },
   paceBehind: { en: 'Behind target pace', ne: 'निर्धारित लक्ष्यभन्दा पछाडि' },
   paceOnTrack: { en: 'On target pace', ne: 'निर्धारित लक्ष्य अनुरूप' },
-  expected: { en: '(expected {n}%)', ne: '(अपेक्षित {n}%)' },
 
   // Charts
   coverageTrendTitle: { en: 'Cumulative progress by day (%)', ne: 'दिनअनुसार सञ्चयी प्रगति (%)' },

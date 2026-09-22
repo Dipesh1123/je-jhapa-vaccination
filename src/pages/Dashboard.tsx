@@ -122,9 +122,6 @@ export function Dashboard() {
       >
         <pace.Icon size={16} />
         {pace.label}
-        <span className="text-slate-500 font-normal">
-          {t('expected', { n: n(expectedPct.toFixed(1)) })}
-        </span>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
