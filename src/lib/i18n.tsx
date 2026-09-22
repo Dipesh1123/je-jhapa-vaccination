@@ -30,7 +30,6 @@ const translations = {
   mainMenu: { en: 'Main menu', ne: 'मुख्य मेनु' },
   navDashboard: { en: 'Dashboard', ne: 'ड्यासबोर्ड' },
   navMap: { en: 'Map', ne: 'नक्सा' },
-  navDownloads: { en: 'Downloads', ne: 'डाउनलोड' },
 
   // Dashboard
   campaignTitle: { en: 'Japanese Encephalitis Vaccination Campaign — Jhapa', ne: 'जापानिज इन्सेफ्लाइटिस खोप अभियान — झापा' },
@@ -107,14 +106,6 @@ const translations = {
   popupProgress: { en: 'Progress', ne: 'प्रगति' },
   popupVaccinated: { en: 'Vaccinated', ne: 'खोप लगाइएको' },
   wardLabel: { en: '· Ward {n}', ne: '· वडा {n}' },
-
-  // Downloads page
-  downloadsTitle: { en: 'Downloads', ne: 'डाउनलोड' },
-  downloadsSubtitle: { en: 'All data is public — no login required', ne: 'सबै डाटा सार्वजनिक छ — कुनै लगइन आवश्यक पर्दैन' },
-  wardAggregateTitle: { en: 'Ward-wise summary (CSV)', ne: 'वडागत सारांश (CSV)' },
-  wardAggregateDesc: { en: 'Population, target, doses and progress % for all 131 wards — one row per ward', ne: '१३१ वडाको जनसंख्या, लक्ष्य, खोप संख्या र प्रगति % — एक पंक्ति प्रति वडा' },
-  excelMirrorTitle: { en: 'Download in JE-083_84.xlsx format', ne: 'JE-083_84.xlsx ढाँचामा डाउनलोड' },
-  excelMirrorDesc: { en: 'Coming soon — an Excel file in the exact format the Health Office currently uses', ne: 'निर्माणाधीन — हाल स्वास्थ्य कार्यालयले प्रयोग गर्ने ठ्याक्कै उही ढाँचामा एक्सेल तयार हुनेछ' },
 
   // Language toggle
   langToggleLabel: { en: 'Language', ne: 'भाषा' },
