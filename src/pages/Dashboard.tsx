@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Target, Syringe, TrendingUp, CalendarDays, TrendingDown, Minus } from 'lucide-react'
+import { Target, Syringe, CalendarDays } from 'lucide-react'
 import { api, type DashboardData, type PalikaRow } from '../lib/api'
 import { formatNumeral, campaignDayNumber, campaignDurationDays, campaignDaysRemaining } from '../lib/nepali'
-import { status } from '../lib/palette'
 import { useLang } from '../lib/i18n'
 import { KpiTile } from '../components/KpiTile'
 import { CoverageTrendChart } from '../components/charts/CoverageTrendChart'
@@ -48,16 +47,6 @@ export function Dashboard() {
   const n = (v: number | string) => formatNumeral(v, lang)
 
   const wardCount = municipalities.find((m) => m.local_level_code === selectedLocalLevel)?.ward_count ?? 0
-
-  // Pace status: never color-alone - always paired with an icon and a label,
-  // using the fixed status palette (never reused as a series color).
-  const expectedPct = duration > 0 ? (Math.min(dayN, duration) / duration) * 100 : 0
-  const gap = summary.coverage_pct - expectedPct
-  const pace = gap >= 2
-    ? { label: t('paceAhead'), color: status.good, Icon: TrendingUp }
-    : gap <= -2
-      ? { label: t('paceBehind'), color: status.critical, Icon: TrendingDown }
-      : { label: t('paceOnTrack'), color: status.warning, Icon: Minus }
 
   const dosesPerDay = dayN > 0 ? Math.round(summary.vaccinated / Math.max(dayN, 1)) : 0
 
@@ -114,14 +103,6 @@ export function Dashboard() {
           sublabel={t('kpiDailyAvgSub')} />
         <KpiTile icon={Target} hue="amber" label={t('kpiOverall')}
           value={`${n(summary.coverage_pct.toFixed(1))}%`} />
-      </div>
-
-      <div
-        className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium"
-        style={{ backgroundColor: `${pace.color}1a`, color: pace.color }}
-      >
-        <pace.Icon size={16} />
-        {pace.label}
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4">

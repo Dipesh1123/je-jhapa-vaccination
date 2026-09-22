@@ -40,9 +40,6 @@ const translations = {
   kpiDailyAvg: { en: 'Daily average', ne: 'दैनिक औसत' },
   kpiDailyAvgSub: { en: 'doses/day', ne: 'मात्रा/दिन' },
   kpiOverall: { en: 'Overall progress', ne: 'समग्र प्रगति' },
-  paceAhead: { en: 'Ahead of target pace', ne: 'निर्धारित लक्ष्यभन्दा अगाडि' },
-  paceBehind: { en: 'Behind target pace', ne: 'निर्धारित लक्ष्यभन्दा पछाडि' },
-  paceOnTrack: { en: 'On target pace', ne: 'निर्धारित लक्ष्य अनुरूप' },
 
   // Charts
   coverageTrendTitle: { en: 'Cumulative progress by day (%)', ne: 'दिनअनुसार सञ्चयी प्रगति (%)' },
