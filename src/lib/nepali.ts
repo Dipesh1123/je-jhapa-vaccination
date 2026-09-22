@@ -49,11 +49,11 @@ export function formatDate(adDateStr: string | null | undefined, lang: Lang): st
   }
 }
 
-// Campaign window - must match data/reference.json (extract_reference.py),
-// which is itself sourced from the news-reported 5-19 Oct 2026 dates. If the
-// district microplan gives a different window, update both places together.
+// Campaign window - must match data/reference.json and api/_lib/campaign.js.
+// Confirmed against the daily-reporting sheet's own day-blocks: 11 days,
+// Day 1 = 5 Ashwin 2083 (2026-10-05) through Day 11 = 15 Ashwin (2026-10-15).
 export const CAMPAIGN_START = '2026-10-05'
-export const CAMPAIGN_END = '2026-10-19'
+export const CAMPAIGN_END = '2026-10-15'
 
 function daysBetween(a: Date, b: Date): number {
   const ms = 24 * 60 * 60 * 1000

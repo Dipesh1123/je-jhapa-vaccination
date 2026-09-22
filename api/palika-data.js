@@ -1,8 +1,8 @@
 // One local level's ward-by-ward detail, for /palika/:slug.
 // ?code=mechinagar_municipality
 
-import { getBigQuery, DATASET, LOCATION } from "./_lib/bigquery.js";
-import { flattenRow } from "./_lib/csv.js";
+import { LOCAL_LEVEL_BY_CODE } from "./_lib/reference.js";
+import { computePalikaSummary, computeWardSummary } from "./_lib/vaccination.js";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -17,30 +17,21 @@ export default async function handler(req, res) {
   }
 
   try {
-    const bq = getBigQuery();
-    const [[palika], wards] = await Promise.all([
-      bq.query({
-        query: `SELECT * FROM \`${DATASET}.v_local_level_cumulative\` WHERE local_level_code = @code`,
-        params: { code },
-        location: LOCATION,
-      }).then(([rows]) => rows),
-      bq.query({
-        query: `SELECT * FROM \`${DATASET}.v_ward_cumulative\` WHERE local_level_code = @code ORDER BY ward_no`,
-        params: { code },
-        location: LOCATION,
-      }).then(([rows]) => rows),
-    ]);
-
-    if (!palika) {
+    const localLevel = LOCAL_LEVEL_BY_CODE[code];
+    if (!localLevel) {
       res.status(404).json({ error: `no local level with code '${code}'` });
       return;
     }
 
+    const [palika, wards] = await Promise.all([
+      computePalikaSummary(code),
+      Promise.all(localLevel.wards.map((w) => computeWardSummary(w.code))),
+    ]);
+
+    wards.sort((a, b) => a.ward_no - b.ward_no);
+
     res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate");
-    res.status(200).json({
-      palika: flattenRow(palika),
-      wards: wards.map(flattenRow),
-    });
+    res.status(200).json({ palika, wards });
   } catch (err) {
     console.error("palika-data failed", err);
     res.status(500).json({ error: "query failed" });

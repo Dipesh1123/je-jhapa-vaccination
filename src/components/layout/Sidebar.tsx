@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Map, Package, Download, X } from 'lucide-react'
+import { LayoutDashboard, Map, Download, X } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { useLang, type TranslationKey } from '../../lib/i18n'
 
@@ -10,7 +10,6 @@ interface SidebarProps {
 const links: { to: string; icon: typeof LayoutDashboard; labelKey: TranslationKey; end?: boolean }[] = [
   { to: '/', icon: LayoutDashboard, labelKey: 'navDashboard', end: true },
   { to: '/map', icon: Map, labelKey: 'navMap' },
-  { to: '/commodity', icon: Package, labelKey: 'navCommodity' },
   { to: '/downloads', icon: Download, labelKey: 'navDownloads' },
 ]
 

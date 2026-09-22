@@ -70,11 +70,6 @@ export function Ward() {
       </div>
 
       <AgeSexChart ageSex={ageSexFromWard(ward)} />
-
-      <div className="grid grid-cols-2 gap-3">
-        <StatTile label={t('colAefiMinor')} value={n(ward.aefi_minor)} />
-        <StatTile label={t('colAefiSerious')} value={n(ward.aefi_serious)} />
-      </div>
     </div>
   )
 }

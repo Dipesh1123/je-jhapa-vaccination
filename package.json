@@ -15,8 +15,8 @@
     "postinstall": "node -e \"const fs=require('fs'); for (const f of ['maplibre-gl-worker.mjs','maplibre-gl-shared.mjs']) fs.copyFileSync('node_modules/maplibre-gl/dist/'+f, 'public/'+f)\""
   },
   "dependencies": {
-    "@google-cloud/bigquery": "^7.9.1",
     "clsx": "^2.1.1",
+    "googleapis": "^181.0.0",
     "lucide-react": "^0.469.0",
     "maplibre-gl": "^6.10.0",
     "nepali-date-converter": "^3.4.0",

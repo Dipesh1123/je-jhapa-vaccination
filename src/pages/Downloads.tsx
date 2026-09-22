@@ -1,4 +1,4 @@
-import { FileSpreadsheet, FileText, Clock } from 'lucide-react'
+import { FileSpreadsheet, Clock } from 'lucide-react'
 import { useLang } from '../lib/i18n'
 
 export function Downloads() {
@@ -24,21 +24,6 @@ export function Downloads() {
           <p className="text-sm font-medium text-slate-800">{t('wardAggregateTitle')}</p>
           <p className="text-xs text-slate-500 mt-0.5">
             {t('wardAggregateDesc')}
-          </p>
-        </div>
-      </a>
-
-      <a
-        href="/api/export-detail"
-        className="flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-blue-300 hover:shadow-sm transition-all"
-      >
-        <div className="h-10 w-10 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
-          <FileText size={20} />
-        </div>
-        <div>
-          <p className="text-sm font-medium text-slate-800">{t('fullDetailTitle')}</p>
-          <p className="text-xs text-slate-500 mt-0.5">
-            {t('fullDetailDesc')}
           </p>
         </div>
       </a>

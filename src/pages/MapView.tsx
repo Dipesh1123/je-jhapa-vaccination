@@ -326,53 +326,6 @@ export function MapView() {
     }
   }, [selectedPalika, mapReady, data, wardGeoAvailable])
 
-  // Facility points.
-  useEffect(() => {
-    const map = mapRef.current
-    if (!map || !mapReady || !data) return
-
-    const geojson: GeoJSON.FeatureCollection = {
-      type: 'FeatureCollection',
-      features: data.facilities.map((f) => ({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: [f.facility_lon, f.facility_lat] },
-        properties: { name: f.facility_name || null, doses: f.total_doses },
-      })),
-    }
-
-    if (map.getSource('facilities')) {
-      ;(map.getSource('facilities') as maplibregl.GeoJSONSource).setData(geojson)
-    } else {
-      map.addSource('facilities', { type: 'geojson', data: geojson })
-      map.addLayer({
-        id: 'facilities-point',
-        type: 'circle',
-        source: 'facilities',
-        paint: {
-          'circle-radius': 4,
-          'circle-color': '#ffffff',
-          'circle-stroke-color': '#1e293b',
-          'circle-stroke-width': 1.5,
-        },
-      })
-      map.on('mousemove', 'facilities-point', (e) => {
-        map.getCanvas().style.cursor = 'pointer'
-        const f = e.features?.[0]
-        if (!f || !popupRef.current) return
-        const p = f.properties as { name: string | null; doses: number }
-        const { lang: l, t: tr } = i18nRef.current
-        popupRef.current
-          .setLngLat(e.lngLat)
-          .setHTML(`<div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:13px"><strong>${p.name || tr('unnamedFacility')}</strong><br/>${tr('popupDoses')}: ${formatNumeral(p.doses, l)}</div>`)
-          .addTo(map)
-      })
-      map.on('mouseleave', 'facilities-point', () => {
-        map.getCanvas().style.cursor = ''
-        popupRef.current?.remove()
-      })
-    }
-  }, [mapReady, data])
-
   if (error) return <div className="p-6"><ErrorBanner message={error} /></div>
 
   return (

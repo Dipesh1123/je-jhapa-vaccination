@@ -23,14 +23,13 @@ const translations = {
   officeTitle: { en: 'Health Office, Jhapa — JE Vaccination Campaign Progress', ne: 'स्वास्थ्य कार्यालय, झापा — जे.ई. खोप अभियान प्रगति' },
   campaignSubtitle: { en: 'Japanese Encephalitis Vaccination Campaign Dashboard', ne: 'जापानिज इन्सेफ्लाइटिस खोप अभियान ड्यासबोर्ड' },
   fiscalYear: { en: 'FY 2083/84', ne: 'आ.व. २०८३/८४' },
-  campaignWindow: { en: '5–19 Oct 2026 campaign · Public dashboard', ne: '५–१९ असोज २०८३ अभियान · सार्वजनिक ड्यासबोर्ड' },
+  campaignWindow: { en: '5–15 Oct 2026 campaign · Public dashboard', ne: '५–१५ असोज २०८३ अभियान · सार्वजनिक ड्यासबोर्ड' },
   publicData: { en: 'FY 2083/84 · Public data', ne: 'आ.व. २०८३/८४ · सार्वजनिक डेटा' },
 
   // Sidebar nav
   mainMenu: { en: 'Main menu', ne: 'मुख्य मेनु' },
   navDashboard: { en: 'Dashboard', ne: 'ड्यासबोर्ड' },
   navMap: { en: 'Map', ne: 'नक्सा' },
-  navCommodity: { en: 'Stock', ne: 'सामग्री मौज्दात' },
   navDownloads: { en: 'Downloads', ne: 'डाउनलोड' },
 
   // Dashboard
@@ -58,25 +57,11 @@ const translations = {
   female: { en: 'Female', ne: 'महिला' },
   male: { en: 'Male', ne: 'पुरुष' },
 
-  // AEFI status bar
-  aefiSummary: { en: '{serious} serious, {minor} minor AEFI reported', ne: '{serious} गम्भीर, {minor} सामान्य AEFI प्रतिवेदित' },
-  aefiNone: { en: 'No AEFI reported', ne: 'कुनै AEFI प्रतिवेदित छैन' },
-
   // Non-reporting wards panel
   nonReportingTitle: { en: 'Not yet reported today', ne: 'आज अझै प्रतिवेदन नआएका' },
   nonReportingDesc: { en: 'Wards with no report received yet for {date}. Not necessarily a problem early in the day - worth a call if it\'s still empty by evening.', ne: '{date} का लागि अझै कुनै प्रतिवेदन नआएका वडाहरू। दिनको सुरुमा यो समस्या नहुन सक्छ — साँझसम्म पनि खाली भए फोन गर्नु उपयुक्त हुन्छ।' },
   allWardsReportedToday: { en: 'All wards have reported today.', ne: 'सबै वडाले आज प्रतिवेदन गरिसकेका छन्।' },
   neverReported: { en: 'Never', ne: 'कहिल्यै छैन' },
-
-  // Duplicate review banner
-  duplicateReviewTitle: { en: 'Flagged for review — possible duplicate reports', ne: 'समीक्षाका लागि झण्डा — सम्भावित नक्कल प्रतिवेदन' },
-  duplicateReviewDesc: {
-    en: 'These facility-days have more than one submission with different numbers, after exact repeats were already removed automatically. Both submissions are currently included in every total below — check with the ward before treating either one as wrong.',
-    ne: 'यी संस्था-दिनहरूमा फरक फरक संख्या भएका एकभन्दा बढी प्रविष्टि छन्, ठ्याक्कै मिल्ने नक्कलहरू स्वतः हटाइसकेपछि पनि। दुवै प्रविष्टि हाल तलका सबै जम्मामा गणना भइरहेका छन् — कुनै एउटालाई गलत मान्नुअघि वडासँग यकिन गर्नुहोस्।',
-  },
-  colFacility: { en: 'Facility', ne: 'संस्था' },
-  colSubmissions: { en: 'Submissions', ne: 'प्रविष्टिहरू' },
-  colCombinedDoses: { en: 'Combined doses counted', ne: 'जम्मा गणना भएको मात्रा' },
 
   // Dashboard filter
   filterAll: { en: 'Overall (Jhapa district)', ne: 'समग्र (झापा जिल्ला)' },
@@ -104,8 +89,6 @@ const translations = {
   backToPalika: { en: 'Back to {name}', ne: '{name} मा फर्कनुहोस्' },
   wardProfileSubtitle: { en: 'Ward-level profile', ne: 'वडास्तरीय प्रोफाइल' },
   colReportsReceived: { en: 'Reports received', ne: 'प्राप्त प्रतिवेदन' },
-  colAefiMinor: { en: 'AEFI — minor', ne: 'AEFI — सामान्य' },
-  colAefiSerious: { en: 'AEFI — serious', ne: 'AEFI — गम्भीर' },
 
   // Map page
   mapTitle: { en: 'Map', ne: 'नक्सा' },
@@ -123,36 +106,13 @@ const translations = {
   wardFallbackCount: { en: '({n} local levels available)', ne: '({n} स्थानीय तह उपलब्ध)' },
   popupProgress: { en: 'Progress', ne: 'प्रगति' },
   popupVaccinated: { en: 'Vaccinated', ne: 'खोप लगाइएको' },
-  popupDoses: { en: 'Doses', ne: 'खोप' },
-  unnamedFacility: { en: 'Unnamed facility', ne: 'नामविहीन संस्था' },
-
-  // Commodity page
-  commodityTitle: { en: 'Stock & Wastage', ne: 'सामग्री मौज्दात र खेर' },
-  commoditySubtitle: { en: 'Ward-wise stock as of last report — {n} wards reported', ne: 'अन्तिम प्रतिवेदन अनुसार वडागत मौज्दात — {n} वडाले प्रतिवेदन गरेको' },
-  noReportsYet: { en: 'No reports received yet', ne: 'अझै कुनै प्रतिवेदन प्राप्त भएको छैन' },
-  kpiOutOfStock: { en: 'Wards out of vaccine stock', ne: 'खोप मौज्दात सकिएका वडा' },
-  kpiHighWastage: { en: 'Wards with wastage over 20%', ne: '२०%भन्दा बढी खेर भएका वडा' },
-  kpiAvgWastage: { en: 'Average wastage rate', ne: 'औसत खेर दर' },
-  colLocalLevelWard: { en: 'Local level / Ward', ne: 'स्थानीय तह / वडा' },
-  colVaccineStock: { en: 'Vaccine stock', ne: 'खोप मौज्दात' },
-  colDiluent: { en: 'Diluent', ne: 'डाइलुएन्ट' },
-  colSyringe: { en: 'Syringe (AD)', ne: 'सिरिन्ज (AD)' },
-  colSafetyBox: { en: 'Safety box', ne: 'सेफ्टी बक्स' },
-  colWastageRate: { en: 'Wastage rate', ne: 'खेर दर' },
-  colStatus: { en: 'Status', ne: 'अवस्था' },
-  colDate: { en: 'Date', ne: 'मिति' },
   wardLabel: { en: '· Ward {n}', ne: '· वडा {n}' },
-  statusOutOfStock: { en: 'Out of stock', ne: 'स्टक सकियो' },
-  statusHighWastage: { en: 'High wastage (>20%)', ne: 'उच्च खेर (>२०%)' },
-  statusNormal: { en: 'Normal', ne: 'सामान्य' },
 
   // Downloads page
   downloadsTitle: { en: 'Downloads', ne: 'डाउनलोड' },
   downloadsSubtitle: { en: 'All data is public — no login required', ne: 'सबै डाटा सार्वजनिक छ — कुनै लगइन आवश्यक पर्दैन' },
   wardAggregateTitle: { en: 'Ward-wise summary (CSV)', ne: 'वडागत सारांश (CSV)' },
   wardAggregateDesc: { en: 'Population, target, doses and progress % for all 131 wards — one row per ward', ne: '१३१ वडाको जनसंख्या, लक्ष्य, खोप संख्या र प्रगति % — एक पंक्ति प्रति वडा' },
-  fullDetailTitle: { en: 'Full report detail (CSV)', ne: 'पूर्ण प्रतिवेदन विवरण (CSV)' },
-  fullDetailDesc: { en: 'Every facility, every day\'s report — with age/sex, commodities, and AEFI', ne: 'हरेक संस्था, हरेक दिनको प्रतिवेदन — उमेर/लिङ्ग, सामग्री, र AEFI सहित' },
   excelMirrorTitle: { en: 'Download in JE-083_84.xlsx format', ne: 'JE-083_84.xlsx ढाँचामा डाउनलोड' },
   excelMirrorDesc: { en: 'Coming soon — an Excel file in the exact format the Health Office currently uses', ne: 'निर्माणाधीन — हाल स्वास्थ्य कार्यालयले प्रयोग गर्ने ठ्याक्कै उही ढाँचामा एक्सेल तयार हुनेछ' },
 
